@@ -16,7 +16,7 @@
  *  Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-// $Id: TeX.h,v 1.8 2005/07/21 08:58:11 christof Exp $
+// $Id: TeX.h,v 1.5 2004/12/21 08:17:39 thoma Exp $
 
 #include <iostream>
 #include <string>
@@ -27,7 +27,6 @@ namespace TeX
 	typedef void (*Simple_cb)(std::ostream &os,gpointer user_data);
 	struct HeaderFlags
 	{	bool latin1:1;
-	        bool utf8:1;
 		bool longtable:1;
 		bool header:1;
 		bool footer:1;
@@ -49,12 +48,12 @@ namespace TeX
 		std::string preamble;
 		
 		HeaderFlags()
-		: latin1(true), utf8(), longtable(true), header(),
+		: latin1(true), longtable(true), header(false),
 		  footer(true), a4(true), german(true), dense(true),
-		  helvetica(true), landscape(), twocolumn(),
+		  helvetica(true), landscape(false), twocolumn(false),
 		  ptsize(10), topmargin(1*in_cm), leftmargin(1), 
 		  bottommargin(1*in_cm), rightmargin(1.5*in_cm),
-		  preamble_cb(), user_data()
+		  preamble_cb(0), user_data(0)
 		{}
 	};
 	struct StringFlags
@@ -69,7 +68,6 @@ namespace TeX
 	
 	std::ostream &Header(std::ostream &os, HeaderFlags fl=HeaderFlags());
 	std::ostream &Footer(std::ostream &os);
-	extern bool TeX_uses_UTF8;
 	std::string string2TeX(const std::string &s, const StringFlags &fl=StringFlags()) throw();
    std::string scale(const std::string& is, unsigned int maxlength, 
                      const std::string& scale,const bool use_string2TeX=true);

@@ -1,5 +1,5 @@
 /*  Gtk--addons: a collection of gtk-- addons
- *  Copyright (C) 2001-2005 Adolf Petig GmbH & Co. KG, written by Christof Petig
+ *  Copyright (C) 2001-2003 Adolf Petig GmbH & Co. KG, written by Christof Petig
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -46,14 +46,7 @@ namespace Gtk2TeX
 		// because of a gtkmm bug :-( you have to use
 		// const_cast<Gtk::TreeIter&>(tf.selection)
 		//	=tv->get_selection()->get_selected();
-//		Gtk::TreeModel::const_iterator selection;
-
-		// This is much easier:
-		// tv->get_selection()->get_selected_rows().assign_to(tf.selection);
-		std::vector<Gtk::TreeModel::Path> selection;
-//		Gtk::TreeSelection::ListHandle_Path selection;
-		bool single_row_with_children;
-		
+		Gtk::TreeModel::const_iterator selection;
 		// Glib::RefPtr<Gtk::TreeSelection> selection;
 		// there's no selection ctor ... so 
 //		gint first_line,last_line; // perhaps as paths ?
@@ -63,15 +56,13 @@ namespace Gtk2TeX
 	
 		TableFlags()
 		: longtable(true), headline(true), environment(true),
-		  multicolumn(),
-		  columntype_cb(), preline_cb(), postline_cb(),
-		  prehead_cb(), posthead_cb(), postlist_cb(),
-                  firstrow_cb(),
+		  multicolumn(0),
+		  columntype_cb(0), preline_cb(0), postline_cb(0),
+		  prehead_cb(0), posthead_cb(0), postlist_cb(0),
+                  firstrow_cb(0),
 //		  first_line(0), last_line(-1),
-		  selection(),
-		  single_row_with_children(),
-		  user_data(), columntitle_cb(),
-		  element_cb()
+		  user_data(0), columntitle_cb(0),
+		  element_cb(0)
 		{}
 	};
 	
