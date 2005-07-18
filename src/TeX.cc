@@ -40,8 +40,10 @@ std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
    if (fl.twocolumn) os << ",twocolumn";
    os << "]{article}\n";
    
+   if (fl.latin1) os << "\\usepackage[latin1]{inputenc}\n";
+   else if (fl.utf8) os << "\\usepackage{ucs}\n""\\usepackage[utf8]{inputenc}\n";
    os << "\\usepackage{";
-   if (fl.latin1) os << "isolatin1,t1enc,";
+   if (fl.latin1) os << "t1enc,";
    if (fl.german) os << "german,";
    if (fl.longtable) os << "longtable,";
    if (fl.helvetica) os << "helvetic,";
