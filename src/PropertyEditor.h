@@ -1,4 +1,4 @@
-// $Id: PropertyEditor.h,v 1.1 2005/09/07 16:22:52 christof Exp $
+// $Id$
 
 #ifndef A169CA7A_BD70_4162_88EA_58016652E754
 #define A169CA7A_BD70_4162_88EA_58016652E754
