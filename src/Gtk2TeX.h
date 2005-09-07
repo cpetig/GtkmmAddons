@@ -49,7 +49,7 @@ namespace Gtk2TeX
 //		Gtk::TreeModel::const_iterator selection;
 
 		// This is much easier:
-		// tf.selection=tv->get_selection()->get_selected_rows();
+		// tv->get_selection()->get_selected_rows().copy(tf.selection);
 		Gtk::TreeSelection::ListHandle_Path selection;
 		bool single_row_with_children;
 		
