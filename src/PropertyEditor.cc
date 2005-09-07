@@ -1,4 +1,4 @@
-// $Id$
+// $Id: PropertyEditor.cc,v 1.1 2005/09/07 16:22:52 christof Exp $
 
 #if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
 
