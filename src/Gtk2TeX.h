@@ -49,8 +49,9 @@ namespace Gtk2TeX
 //		Gtk::TreeModel::const_iterator selection;
 
 		// This is much easier:
-		// tv->get_selection()->get_selected_rows().copy(tf.selection);
-		Gtk::TreeSelection::ListHandle_Path selection;
+		// tv->get_selection()->get_selected_rows().assign_to(tf.selection);
+		std::vector<Gtk::TreeModel::Path> selection;
+//		Gtk::TreeSelection::ListHandle_Path selection;
 		bool single_row_with_children;
 		
 		// Glib::RefPtr<Gtk::TreeSelection> selection;
@@ -67,7 +68,7 @@ namespace Gtk2TeX
 		  prehead_cb(), posthead_cb(), postlist_cb(),
                   firstrow_cb(),
 //		  first_line(0), last_line(-1),
-		  selection(0,Glib::OWNERSHIP_NONE),
+		  selection(),
 		  single_row_with_children(),
 		  user_data(), columntitle_cb(),
 		  element_cb()

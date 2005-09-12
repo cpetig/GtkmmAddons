@@ -154,8 +154,8 @@ std::ostream &Gtk2TeX::TreeView2Table(std::ostream &os,const Gtk::TreeView *cl,c
 
 
    if (!fl.selection.empty()) //  && fl.selection->begin()!=fl.selection->end())
-   { for (Gtk::TreeSelection::ListHandle_Path::const_iterator i=fl.selection.begin();i!=fl.selection.end();++i)
-     { Gtk::TreeSelection::ListHandle_Path::const_iterator j=i;
+   { for (std::vector<Gtk::TreeModel::Path>::const_iterator i=fl.selection.begin();i!=fl.selection.end();++i)
+     { std::vector<Gtk::TreeModel::Path>::const_iterator j=i;
        ++j;
        TreeView2Table_sub(os,cl,fl,const_cast<Gtk::TreeView*>(cl)->get_model()->get_iter(*i),j==fl.selection.end());
      }
