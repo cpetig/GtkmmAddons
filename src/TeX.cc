@@ -18,6 +18,7 @@
 
 // $Id: TeX.cc,v 1.10 2005/07/21 09:04:44 christof Exp $
 
+#include <config.h>
 #include <TeX.h>
 #include <cassert>
 
@@ -41,13 +42,15 @@ std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
    if (fl.twocolumn) os << ",twocolumn";
    os << "]{article}\n";
    
-   if (fl.latin1) os << "\\usepackage[latin1]{inputenc}\n";
-   else if (fl.utf8) os << "\\usepackage{ucs}\n""\\usepackage[utf8]{inputenc}\n";
+   if (fl.utf8) os << "\\usepackage{ucs}\n""\\usepackage[utf8]{inputenc}\n";
+   else if (fl.latin1) os << "\\usepackage[latin1]{inputenc}\n";
    os << "\\usepackage{";
-   if (fl.latin1) os << "t1enc,";
+   if (fl.latin1 && !fl.utf8) os << "t1enc,";
    if (fl.german) os << "german,";
    if (fl.longtable) os << "longtable,";
+#ifdef HAS_HELVETIC   
    if (fl.helvetica) os << "helvetic,";
+#endif
    if (fl.pagestyle=="fancy") os << "fancyheadings,";
    os << "vmargin}\n";
    
