@@ -42,17 +42,25 @@ std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
    if (fl.twocolumn) os << ",twocolumn";
    os << "]{article}\n";
    
-   if (fl.utf8) os << "\\usepackage{ucs}\n""\\usepackage[utf8]{inputenc}\n";
+   if (fl.utf8) 
+#ifdef HAS_UTF8X
+     os << "\\usepackage[utf8x]{inputenc}\n";
+#else
+     os << "\\usepackage{ucs}\n""\\usepackage[utf8]{inputenc}\n";
+#endif
    else if (fl.latin1) os << "\\usepackage[latin1]{inputenc}\n";
    os << "\\usepackage{";
-   if (fl.latin1 && !fl.utf8) os << "t1enc,";
+   if (fl.latin1 || fl.utf8) os << "t1enc,";
    if (fl.german) os << "german,";
    if (fl.longtable) os << "longtable,";
-#ifdef HAS_HELVETIC   
-   if (fl.helvetica) os << "helvetic,";
-#endif
    if (fl.pagestyle=="fancy") os << "fancyheadings,";
    os << "vmargin}\n";
+   if (fl.helvetica) 
+#ifdef HAS_HELVETIC   
+     os << "\\usepackage{helvetic}\n";
+#else
+     os << "\\renewcommand{\\sfdefault}{phv}\n";
+#endif
    
    if (fl.packages.size()) os << "\\usepackage{" << fl.packages << "}\n";
    
