@@ -49,7 +49,8 @@ namespace TeX
 		std::string preamble;
 		
 		HeaderFlags()
-		: latin1(true), utf8(), longtable(true), header(),
+		: latin1(!TeX_uses_UTF8), utf8(TeX_uses_UTF8), 
+		  longtable(true), header(),
 		  footer(true), a4(true), german(true), dense(true),
 		  helvetica(true), landscape(), twocolumn(),
 		  ptsize(10), topmargin(1*in_cm), leftmargin(1), 
