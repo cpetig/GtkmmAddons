@@ -56,7 +56,7 @@ void Gtk::OStream::line_TreeView(const std::string &line)
       
       int column=get_ModelColumn(*coli,"text");
       if (column!=-1)
-         row.set_value(column, Glib::ustring(line.substr(b,end)));
+         row.set_value(column, Glib::ustring(line.substr(b,end!=std::string::npos?end-b:end)));
            
       ++coli;
       b=end+1;
