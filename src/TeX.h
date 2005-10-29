@@ -25,6 +25,8 @@
 namespace TeX
 {	static const float in_cm(0.3935);
 	typedef void (*Simple_cb)(std::ostream &os,gpointer user_data);
+	// whether the program feeds utf8 to TeX (or string2TeX)
+	extern bool TeX_uses_UTF8;
 	struct HeaderFlags
 	{	bool latin1:1;
 	        bool utf8:1;
@@ -70,7 +72,6 @@ namespace TeX
 	
 	std::ostream &Header(std::ostream &os, HeaderFlags fl=HeaderFlags());
 	std::ostream &Footer(std::ostream &os);
-	extern bool TeX_uses_UTF8;
 	std::string string2TeX(const std::string &s, const StringFlags &fl=StringFlags()) throw();
    std::string scale(const std::string& is, unsigned int maxlength, 
                      const std::string& scale,const bool use_string2TeX=true);
