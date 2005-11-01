@@ -1,0 +1,4 @@
+.gtkmmheader*
+.deps
+Makefile.in
+Makefile
