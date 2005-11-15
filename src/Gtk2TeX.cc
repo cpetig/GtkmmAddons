@@ -48,7 +48,8 @@ static void TreeView2Table_sub(std::ostream &os,const Gtk::TreeView *cl,
    // gtkmm2 seems to have problems with const pointers so we trick
    Glib::ListHandle<Gtk::TreeViewColumn*> cols=const_cast<Gtk::TreeView*>(cl)->get_columns();
    for (Glib::ListHandle<Gtk::TreeViewColumn*>::const_iterator x=cols.begin();x!=cols.end();++x,++x2)
-   {  Glib::ustring content=get_text(y,*x);
+   {  if (skip_first && !x2) continue;
+      Glib::ustring content=get_text(y,*x);
       
       if (!content.empty())
       {  if (is_lines(content))
