@@ -26,13 +26,13 @@ std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
 {  // adjust default values
    if (fl.pagestyle=="empty") fl.footer=false;
    
-   if (fl.leftfoot.size() || fl.rightfoot.size() || fl.leftheader.size() 
-   	|| fl.rightheader.size())
+   if (!fl.leftfoot.empty() || !fl.rightfoot.empty() 
+       || !fl.leftheader.empty() || !fl.centerheader.empty() || !fl.rightheader.empty())
       fl.pagestyle="fancy";
    
    if (fl.pagestyle=="fancy")
-   {  fl.footer=fl.leftfoot.size() || fl.rightfoot.size();
-      fl.header=fl.leftheader.size() || fl.rightheader.size();
+   {  fl.footer=!fl.leftfoot.empty() || !fl.rightfoot.empty();
+      fl.header=!fl.leftheader.empty() || !fl.centerheader.empty() || !fl.rightheader.empty();
    }
 
    // now output it
@@ -79,6 +79,7 @@ std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
    if (fl.pagestyle=="fancy")
    {  os << "\\lfoot{" << fl.leftfoot << "}\\rfoot{" << fl.rightfoot << "}\n";
       os << "\\lhead{" << fl.leftheader << "}\\rhead{" << fl.rightheader << "}\n";
+      os << "\\chead{" << fl.centerheader << "}\n";
    }
    
    if (fl.dense) os << "\\parindent0pt\n"

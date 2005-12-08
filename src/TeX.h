@@ -43,7 +43,7 @@ namespace TeX
 		// in inches
 		float topmargin,leftmargin,bottommargin,rightmargin;
 		std::string leftfoot,rightfoot; // fancyheadings
-		std::string leftheader,rightheader; // fancyheadings
+		std::string leftheader,centerheader,rightheader; // fancyheadings
 		Simple_cb preamble_cb; // called before begin{document}
 		gpointer user_data;
 		std::string packages;
