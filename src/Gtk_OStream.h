@@ -60,8 +60,12 @@ public:
 	OStreamBase(line_cbt l,close_cbt c=0);
 	OStreamBase(data_cbt d);
         ~OStreamBase(void);
+        void flush();
         // the arguments are for convenience only, set_user_data works the same
-        void flush(gpointer user_data=0,GtkDestroyNotify d=0);
+        void flush(gpointer user_data=0,GtkDestroyNotify d=0)
+        { set_user_data(user_data,d);
+          flush();
+        }
         void set_user_data(gpointer _user_data=0,GtkDestroyNotify d=0)
         {  user_data=_user_data;
            notify=d;

@@ -58,11 +58,8 @@ Gtk::OStreamBase::~OStreamBase(void)
 {   // flush(); can't help any more, this is destroyed
 }
 
-void Gtk::OStreamBase::flush(gpointer _user_data,GtkDestroyNotify d)
-{  if (_user_data || d)
-   {  user_data=_user_data; notify=d; }
-
-   if (flush_impl) (dynamic_cast<Gtk::OStream*>(this)->*flush_impl)();
+void Gtk::OStreamBase::flush()
+{  if (flush_impl) (dynamic_cast<Gtk::OStream*>(this)->*flush_impl)();
    else if (line_impl && data_impl==&OStream::default_data && !data.empty())
    {  (dynamic_cast<Gtk::OStream*>(this)->*line_impl)(data);
       data="";
