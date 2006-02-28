@@ -62,7 +62,7 @@ public:
         ~OStreamBase(void);
         void flush();
         // the arguments are for convenience only, set_user_data works the same
-        void flush(gpointer user_data=0,GtkDestroyNotify d=0)
+        void flush(gpointer user_data,GtkDestroyNotify d=0)
         { set_user_data(user_data,d);
           flush();
         }
