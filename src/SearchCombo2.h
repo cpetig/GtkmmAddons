@@ -55,6 +55,8 @@ class SearchCombo2 : public Gtk::ComboBoxEntry
 
   void on_entry_changed();
   void popupdown();
+  bool popup_key_pr(GdkEventKey* k);
+  bool popup_key_rel(GdkEventKey* k);
 //  sigc::signal0<void> activate;
 public:
   explicit SearchCombo2(bool always_fill=false, bool autoexpand=false);
