@@ -4,7 +4,9 @@ CLEANFILES = *~
 
 GTKMMTOOLS=$(HOME)/sourceforge/gtkmm-2.2/tools
 
-INCLUDES = -I. -I$(top_srcdir)/searchcombo/src @GTKMM_CFLAGS@ 
+AM_CXXFLAGS=-Wall
+
+INCLUDES = -I. -I$(top_srcdir)/searchcombo/src @GTKMM_CFLAGS@
 
 lib_LIBRARIES = libGtkmmAddons.a
 
