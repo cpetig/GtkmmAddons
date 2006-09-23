@@ -30,7 +30,7 @@
 #  include <sigc++/compatibility.h>
 #endif
 
-const char *names[]=
+const char * const names[]=
   {
     "Alan Cox <alan@lxorguk.ukuu.org.uk>",
     "Albert D. Cahalan <acahalan@cs.uml.edu>",
@@ -104,18 +104,22 @@ class comboArtikel : public SigC::Object
     public:
         void suchfunc(gboolean *cont, GtkSCContext newsearch)
         {   int added=0;
-            const gchar *prefix=sc->get_text().c_str();
+            std::string prefix_=sc->get_text();
+            const gchar *prefix=prefix_.c_str();
 
             if (newsearch==GTK_SEARCH_CLOSE) return;
-            else if (newsearch==GTK_SEARCH_OPEN) nextval=0;
+            else if (newsearch==GTK_SEARCH_OPEN 
+                  || newsearch==GTK_SEARCH_REOPEN) nextval=0;
             for (;nextval<namenum;nextval++)
-            {   if (!strncasecmp(prefix,names[nextval],strlen(prefix)))
+            {   // std::cerr << "nextval " << nextval << ": " << names[nextval] << '\n';
+                if (newsearch==GTK_SEARCH_REOPEN || !strncasecmp(prefix,names[nextval],strlen(prefix)))
                 {   sc->add_item(names[nextval]);
                     added++;
                     if (added>2) 
-                    { nextval++; *cont=true; sleep(5); return; }
+                    { nextval++; *cont=true; /*sleep(5);*/ return; }
                 }
             }
+//            std::cerr << "search ended " << namenum << '\n';
         }
         void selectfunc()
         {
