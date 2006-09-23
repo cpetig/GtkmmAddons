@@ -23,7 +23,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/window.h>
-#include <SearchCombo.h>
+#include <SearchCombo2.h>
 #include <unistd.h>
 #include <iostream>
 #if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
@@ -100,7 +100,7 @@ const int namenum=sizeof(names)/sizeof(names[0]);
 class comboArtikel : public SigC::Object
 {
         int nextval;
-        Gtk::SearchCombo *sc;
+        Gtk::SearchCombo2 *sc;
     public:
         void suchfunc(gboolean *cont, GtkSCContext newsearch)
         {   int added=0;
@@ -112,8 +112,8 @@ class comboArtikel : public SigC::Object
             {   if (!strncasecmp(prefix,names[nextval],strlen(prefix)))
                 {   sc->add_item(names[nextval]);
                     added++;
-                    if (added>10) 
-                    { nextval++; *cont=true; return; }
+                    if (added>2) 
+                    { nextval++; *cont=true; sleep(5); return; }
                 }
             }
         }
@@ -121,7 +121,7 @@ class comboArtikel : public SigC::Object
         {
             std::cerr << "activate: "<<sc->get_text()<<"\n";
         }
-        comboArtikel(Gtk::SearchCombo *s) : nextval(0), sc(s)
+        comboArtikel(Gtk::SearchCombo2 *s) : nextval(0), sc(s)
     {}
 };
 
@@ -129,7 +129,7 @@ class comboArtikel : public SigC::Object
 class testwindow : public Gtk::Window
 {
         Gtk::VBox vbox;
-        Gtk::SearchCombo scombo,scombo2,scombo3;
+        Gtk::SearchCombo2 scombo,scombo2,scombo3;
         comboArtikel comboart,comboart2,comboart3;
         Gtk::Entry entry;
 
