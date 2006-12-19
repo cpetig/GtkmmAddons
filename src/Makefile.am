@@ -20,8 +20,15 @@ libGtkmmAddons_a_SOURCES = Gtk_OStream_label.cc \
 		 gtksearchcombo.c Gtk_OStream_TreeView.cc \
 		 DoubleButton.cc doublebutton.c WinFileReq.cc \
 		 ChoiceButton.cc gtkhacks.cc Gtk2TeX.cc \
+<<<<<<< /tmp/mt.8KQMO7
 		 expander_hook.c 
 #		 SearchCombo2.cc
+||||||| /tmp/mt.Q6JQAM
+		 expander_hook.c SearchCombo2.cc
+=======
+		 expander_hook.c 
+#SearchCombo2.cc
+>>>>>>> /tmp/mt.SQGZO9
 
 BUILT_SOURCES=SearchCombo.cc SearchCombo.h gtksearchcombo.c gtksearchcombo.h \
 	gtkmm DoubleButton.h DoubleButton.cc doublebutton.c doublebutton.h \
