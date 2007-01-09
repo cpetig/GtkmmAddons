@@ -3,6 +3,7 @@
 #include <cassert>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmenu.h>
+#include <gtkmm/togglebutton.h>
 
 #include <iostream>
 
