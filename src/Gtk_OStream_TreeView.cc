@@ -21,6 +21,7 @@
 #include "Gtk_OStream.h"
 #include <gtkmm/treeview.h>
 #include <gtkmm/liststore.h>
+#include <gtkmm/treestore.h>
 #include <gtkmm/treeviewcolumn.h>
 #include "gtkhacks.h"
 
@@ -28,21 +29,27 @@ void Gtk::OStream::erase_TreeView(openmode mode)
 {  if (mode&std::ios::trunc) 
    {  Glib::RefPtr<TreeModel> r_model=handler_data.treeview.view->get_model();
       Glib::RefPtr<Gtk::ListStore> store=Glib::RefPtr<Gtk::ListStore>::cast_dynamic(r_model);
-      if (!store) 
-      {  std::cerr << "Model is not a ListStore ...\n";
+      if (store) 
+        {store->clear(); return; }
+
+      std::cerr << "Model is not a ListStore ...\n";
+      std::cerr << "... trying TreeStore ....\n";
+
+      Glib::RefPtr<Gtk::TreeStore> tstore=Glib::RefPtr<Gtk::TreeStore>::cast_dynamic(r_model);
+      if(!tstore)
+	{std::cerr << "Model is not a TreeStore too ...\n";
          return;
-      }
-      store->clear();
+        }
+      tstore->clear();
    }
 }
 
 void Gtk::OStream::line_TreeView(const std::string &line)
 {  Glib::RefPtr<TreeModel> r_model=handler_data.treeview.view->get_model();
    Glib::RefPtr<Gtk::ListStore> store=Glib::RefPtr<Gtk::ListStore>::cast_dynamic(r_model);
-   if (!store) 
-   {  std::cerr << "Model is not a ListStore ...\n";
-      return;
-   }
+
+   if (store) 
+   { 
    Glib::ListHandle<TreeViewColumn*> cols=handler_data.treeview.view->get_columns();
    
    std::string::size_type b=0,end=std::string::npos;
@@ -61,5 +68,43 @@ void Gtk::OStream::line_TreeView(const std::string &line)
       ++coli;
       b=end+1;
    } while(end!=std::string::npos);
+
+   return;
+   }
+
+   std::cerr << "Model is not a ListStore ...\n";
+   std::cerr << "... trying TreeStore ....\n";
+
+   Glib::RefPtr<Gtk::TreeStore> tstore=Glib::RefPtr<Gtk::TreeStore>::cast_dynamic(r_model);
+   if(!tstore)
+	{std::cerr << "Model is not a TreeStore too ...\n";
+         return;
+        }
+   else
+    {
+     Glib::ListHandle<TreeViewColumn*> cols=handler_data.treeview.view->get_columns();
+     
+     std::string::size_type b=0,end=std::string::npos;
+     const unsigned linesize=line.size();
+     Glib::ListHandle<TreeViewColumn*>::const_iterator coli=cols.begin();
+     Gtk::TreeRow row = *tstore->append();
+     do
+     {  if (coli==cols.end()) break;
+        if (b>=linesize) break;
+        end=line.find('\t',b);
+        
+        int column=get_ModelColumn(*coli,"text");
+        if (column!=-1)
+           row.set_value(column, Glib::ustring(line.substr(b,end!=std::string::npos?end-b:end)));
+             
+        ++coli;
+        b=end+1;
+     } while(end!=std::string::npos);
+
+    } 
+
 }
+
+
+
 

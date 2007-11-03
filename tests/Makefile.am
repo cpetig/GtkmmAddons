@@ -5,7 +5,7 @@ SUBDIRS=close_window
 AM_CXXFLAGS=-I$(top_srcdir)/searchcombo/src -I$(top_srcdir)/src
 
 EXTRA_PROGRAMS = nsc_test sccont_test optionmenu db_test back_test \
-	callbackbuf wfr_test treeview
+	callbackbuf wfr_test treeview treeview_tree
 
 back_test_SOURCES = back_test.cc db_embed.cc
 back_test_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
@@ -27,6 +27,9 @@ optionmenu_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
 
 treeview_SOURCES = treeview.cc
 treeview_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
+
+treeview_tree_SOURCES = treeview_tree.cc
+treeview_tree_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
 
 callbackbuf_SOURCES = callbackbuf.cc
 callbackbuf_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@

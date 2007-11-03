@@ -57,6 +57,7 @@ int main(int argc,char **argv)
    w.show();
    {  Gtk::OStream os(&w.TreeView());
       os << "a\tb\tc\n";
+      os << "a\tg\th\n";
       os << "d\te\tf\n"
         "g\th\ti\n"; 
 //      os.flush();

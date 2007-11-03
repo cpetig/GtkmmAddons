@@ -205,6 +205,9 @@ DEBUG(printf("SCB: destroy %p\n",searchcombo));
      g_object_unref (sc->popwin);
      sc->popwin = NULL;
   }
+  // disconnect signals to prevent calls after object has started destruction
+  gtk_signal_disconnect_by_func(GTK_OBJECT (sc->entry),
+            (GtkSignalFunc) gtk_searchcombo_entry_focus_out, searchcombo);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (*GTK_OBJECT_CLASS (parent_class)->destroy) (searchcombo);
