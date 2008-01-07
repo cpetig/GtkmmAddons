@@ -161,9 +161,9 @@ std::string TeX::string2TeX(const std::string &s, const StringFlags &fl) throw()
 	    {  ret+='~'; in_line=true; }
 	    else { ret+= s[i]; in_line=true; }
 	    break;
-	 case '€':
-		ret+="\\euro";
-		break;
+         case '€':
+            ret+="\\euro";
+            break;	    
 	 default:
 	    if (value<0x80) // || value==(unsigned char)(s[i]))
 	       ret+= s[i];
