@@ -53,7 +53,8 @@ std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
    if (fl.latin1 || fl.utf8) os << "t1enc,";
    if (fl.german) os << "german,";
    if (fl.longtable) os << "longtable,";
-   if (fl.pagestyle=="fancy") os << "fancyheadings,";
+//   if (fl.pagestyle=="fancy") os << "fancyheadings,";
+   if (fl.pagestyle=="fancy") os << "fancyhdr,";
    os << "vmargin}\n";
    if (fl.helvetica) 
 #ifdef HAS_HELVETIC   
