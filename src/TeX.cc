@@ -121,12 +121,15 @@ std::string TeX::string2TeX(const std::string &s, const StringFlags &fl) throw()
 	 case '%':
 	 case '{':
 	 case '}':
-	 case '[':
-	 case ']':
 	 case '#':
 	 case '$':
 	 case '_': in_line=true;
 	    ret+='\\'; ret+=s[i];
+	    break;
+	 case '[': // these seem to pass as is
+	 case ']':
+	    in_line=true;
+	    ret+=s[i];
 	    break;
 	 case '*':
 	 case '<':
@@ -162,7 +165,7 @@ std::string TeX::string2TeX(const std::string &s, const StringFlags &fl) throw()
 	    {  ret+='~'; in_line=true; }
 	    else { ret+= s[i]; in_line=true; }
 	    break;
-         case '€':
+         case 0x20ac: // '€'
             ret+="\\euro";
             break;	    
 	 default:
