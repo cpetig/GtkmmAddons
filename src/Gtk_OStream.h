@@ -52,7 +52,7 @@ class OStreamBase : public std::ostream
         std::string data;
         gpointer user_data;
         GtkDestroyNotify notify;
-        SigC::Signal0<void> flushed;
+        sigc::signal<void> flushed;
         callbackbuf<Gtk::OStreamBase> buf;
         
         std::streamsize data_cb(const char_type* __s, std::streamsize __n);
@@ -71,7 +71,7 @@ public:
            notify=d;
         }
         
-        SigC::Signal0<void> &signal_flushed() { return flushed; }
+        sigc::signal<void> &signal_flushed() { return flushed; }
 };
 
 class OStream : public OStreamBase

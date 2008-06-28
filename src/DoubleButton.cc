@@ -40,7 +40,7 @@ namespace
 void DoubleButton_signal_secondpressed_callback(doublebutton* self, int button,void* data)
 {
   using namespace ManuProC;
-  typedef SigC::Slot1<void,int> SlotType;
+  typedef sigc::slot<void,int> SlotType;
 
   // Do not try to call a signal on a disassociated wrapper.
   if(Glib::ObjectBase::_get_current_wrapper((GObject*) self))

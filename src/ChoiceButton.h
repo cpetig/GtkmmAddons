@@ -43,8 +43,8 @@ class ChoiceButton : public DoubleButton
 	std::vector<Glib::RefPtr<Gdk::Pixbuf> > images;
 	std::vector<Glib::ustring> texts;
 	std::vector<Glib::ustring> tooltips;
-	std::vector<SigC::Slot0<void> > callbacks;
-	SigC::Signal0<void> changed;
+	std::vector<sigc::slot<void> > callbacks;
+	sigc::signal<void> changed;
 //	std::vector<Gtk::MenuItem *> menuitems;
 	bool activate_on_change;
 
@@ -59,10 +59,10 @@ public:
 	~ChoiceButton();
 	void add(const Glib::RefPtr<Gdk::Pixbuf> &image, 
 		const Glib::ustring &text, const Glib::ustring &tooltip, 
-		const SigC::Slot0<void> &callback=SigC::Slot0<void>());
+		const sigc::slot<void> &callback=sigc::slot<void>());
 	void add(const Glib::RefPtr<Gdk::Pixbuf> &image, 
-		const Glib::ustring &text, const SigC::Slot0<void> &callback=SigC::Slot0<void>());
-	void add(const Glib::ustring &text, const SigC::Slot0<void> &callback=SigC::Slot0<void>());
+		const Glib::ustring &text, const sigc::slot<void> &callback=sigc::slot<void>());
+	void add(const Glib::ustring &text, const sigc::slot<void> &callback=sigc::slot<void>());
 
 	unsigned get_index() const { return actual_index; }
 	void set_index(unsigned idx);
@@ -72,7 +72,7 @@ public:
 	void set_tooltips(Gtk::Tooltips *_tips);
 
 	void set_activate_on_change(bool x) { activate_on_change=x; }
-	SigC::Signal0<void> &signal_changed()
+	sigc::signal<void> &signal_changed()
 	{  return changed; }
 
 	void set_index_sensitive(unsigned idx,bool sensitive);

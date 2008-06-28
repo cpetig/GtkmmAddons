@@ -22,18 +22,18 @@ class WinFileReq
 #endif  
 {
 #ifndef __MINGW32__
-	SigC::Slot1<void,const std::string &> slot;
+	sigc::slot<void,const std::string &> slot;
 	bool call_on_cancel;
 	
         void on_ok_button1_clicked();
         void on_cancel();
 #endif
 public:
-	WinFileReq(const SigC::Slot1<void,const std::string &> &sl, std::string file,
+	WinFileReq(const sigc::slot<void,const std::string &> &sl, std::string file,
 		std::string filter=std::string(), std::string extension=std::string(), std::string title=std::string(), bool load=true,
 		Gtk::Window *parent=0,bool pass_cancel=false);
 	// to abstract the new/automatic behaviour on win32/linux
-	static void create(const SigC::Slot1<void,const std::string &> &sl,const std::string &file,
+	static void create(const sigc::slot<void,const std::string &> &sl,const std::string &file,
 		std::string filter=std::string(), std::string extension=std::string(), std::string title=std::string(), bool load=true,
 		Gtk::Window *parent=0,bool pass_cancel=false);
 };

@@ -55,7 +55,7 @@ const Glib::SignalProxyInfo SearchCombo_signal_activate_info =
 void SearchCombo_signal_search_callback(GtkSearchCombo* self, gboolean* cont,GtkSCContext context,void* data)
 {
   using namespace Gtk;
-  typedef SigC::Slot2<void,gboolean *,GtkSCContext> SlotType;
+  typedef sigc::slot<void,gboolean *,GtkSCContext> SlotType;
 
   // Do not try to call a signal on a disassociated wrapper.
   if(Glib::ObjectBase::_get_current_wrapper((GObject*) self))

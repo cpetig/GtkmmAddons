@@ -30,7 +30,7 @@ void WinFileReq::on_cancel()
    delete this;
 }
 
-#if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
+#if 0 && GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
 #  include <sigc++/bind.h>
 // don't ask me why this does not work:
 // #  include <sigc++/compatibility.h>
@@ -51,7 +51,7 @@ namespace SigC
 #include "WinFileReq_glade.cc"
 #endif
 
-WinFileReq::WinFileReq(const SigC::Slot1<void,const std::string &> &sl,
+WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
                 std::string file, std::string filter, 
                 std::string extension, std::string title, bool load,
 		Gtk::Window *parent, bool pass_cancel)
@@ -89,7 +89,7 @@ WinFileReq::WinFileReq(const SigC::Slot1<void,const std::string &> &sl,
        if ( SHGetPathFromIDList ( pidl, buf ) )
        { std::string result=buf;
          TagStream::utf82iso(result);
-         const_cast<SigC::Slot1<void,const std::string &>&>(sl)(result);
+         const_cast<sigc::slot<void,const std::string &>&>(sl)(result);
        }
         // free memory used
         IMalloc * imalloc = 0;
@@ -100,7 +100,7 @@ WinFileReq::WinFileReq(const SigC::Slot1<void,const std::string &> &sl,
         }     
      }
      else if (pass_cancel)
-        const_cast<SigC::Slot1<void,const std::string &>&>(sl)(std::string());
+        const_cast<sigc::slot<void,const std::string &>&>(sl)(std::string());
      return;
    }
    
@@ -134,14 +134,14 @@ WinFileReq::WinFileReq(const SigC::Slot1<void,const std::string &> &sl,
    if (res) 
    { std::string result=buf;
      TagStream::utf82iso(result);
-     const_cast<SigC::Slot1<void,const std::string &>&>(sl)(result);
+     const_cast<sigc::slot<void,const std::string &>&>(sl)(result);
    }
    else if (pass_cancel)
-      const_cast<SigC::Slot1<void,const std::string &>&>(sl)(std::string());
+      const_cast<sigc::slot<void,const std::string &>&>(sl)(std::string());
 #endif
 }
 
-void WinFileReq::create(const SigC::Slot1<void,const std::string &> &sl,const std::string &file,
+void WinFileReq::create(const sigc::slot<void,const std::string &> &sl,const std::string &file,
 		std::string filter, std::string extension, std::string title, bool load,
 		Gtk::Window *parent, bool pass_cancel)
 {  (void)

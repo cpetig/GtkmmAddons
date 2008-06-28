@@ -21,10 +21,7 @@
 #include <gtkmm/menuitem.h>
 #include <gtk/gtkmenu.h>
 
-#if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
-#  include <sigc++/compatibility.h>
 #  include <sigc++/bind.h>
-#endif
 
 ManuProC::ChoiceButton::ChoiceButton(bool tearoff)
 	: actual_index(), image(), label(), menu(), tips(),
@@ -36,8 +33,8 @@ ManuProC::ChoiceButton::ChoiceButton(bool tearoff)
    menu->add(*tomi);
    tomi->show();
    
-   signal_clicked().connect(SigC::slot(*this,&ChoiceButton::on_button_pressed));
-   signal_secondpressed().connect(SigC::slot(*this,&ChoiceButton::on_sbutton_pressed));
+   signal_clicked().connect(sigc::mem_fun(*this,&ChoiceButton::on_button_pressed));
+   signal_secondpressed().connect(sigc::mem_fun(*this,&ChoiceButton::on_sbutton_pressed));
 }
 
 ManuProC::ChoiceButton::~ChoiceButton()
@@ -46,7 +43,7 @@ ManuProC::ChoiceButton::~ChoiceButton()
 
 void ManuProC::ChoiceButton::add(const Glib::RefPtr<Gdk::Pixbuf> &_image, 
         const Glib::ustring &text, const Glib::ustring &tooltip,
-        const SigC::Slot0<void> &callback)
+        const sigc::slot<void> &callback)
 {  unsigned old_size=images.size();
    images.push_back(_image);
    texts.push_back(text);
@@ -59,7 +56,7 @@ void ManuProC::ChoiceButton::add(const Glib::RefPtr<Gdk::Pixbuf> &_image,
    if (tips && !tooltip.empty()) tips->set_tip(*mi, tooltip);
    im->show();
    mi->show();
-   mi->signal_activate().connect(SigC::bind(SigC::slot(*this,&ChoiceButton::on_menuitem_selected),old_size));
+   mi->signal_activate().connect(sigc::bind(sigc::mem_fun(*this,&ChoiceButton::on_menuitem_selected),old_size));
    
    if (!old_size) set_index(0);
 }
@@ -156,11 +153,11 @@ void ManuProC::ChoiceButton::rebuild_button(bool horizontal)
 }
 
 void ManuProC::ChoiceButton::add(const Glib::RefPtr<Gdk::Pixbuf> &_image, 
-        const Glib::ustring &text, const SigC::Slot0<void> &callback)
+        const Glib::ustring &text, const sigc::slot<void> &callback)
 { add(_image,text,Glib::ustring(),callback);
 }
 
-void ManuProC::ChoiceButton::add(const Glib::ustring &text, const SigC::Slot0<void> &callback)
+void ManuProC::ChoiceButton::add(const Glib::ustring &text, const sigc::slot<void> &callback)
 { add(Glib::RefPtr<Gdk::Pixbuf>(),text,Glib::ustring(),callback);
 }
 
