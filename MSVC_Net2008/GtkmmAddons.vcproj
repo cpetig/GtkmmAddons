@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../src;../../glibmm/glib;../../glibmm/MSVC_Net2003/glibmm;&quot;../../gtk-dev/include/glib-2.0&quot;;&quot;../../gtk-dev/lib/glib-2.0/include&quot;;&quot;../../libsigc++&quot;;&quot;../../libsigc++/MSVC_Net2003&quot;;&quot;../../gtk-dev/include/pango-1.0&quot;;../../cairomm/cairo;&quot;../../gtk-dev/include/cairo&quot;;&quot;../../gtk-dev/include/gtk-2.0&quot;;&quot;../../gtk-dev/lib/gtk-2.0/include&quot;;&quot;../../gtk-dev/include/atk-1.0&quot;;../../gtkmm/gtk;../../gtkmm/pango;../../gtkmm/gdk;../../gtkmm/atk;../../gtkmm/MSVC_Net2003/gtkmm;../../gtkmm/MSVC_Net2003/gdkmm"
+				AdditionalIncludeDirectories="../src;.;../../glibmm/glib;../../glibmm/MSVC_Net2003/glibmm;&quot;../../gtk-dev/include/glib-2.0&quot;;&quot;../../gtk-dev/lib/glib-2.0/include&quot;;&quot;../../libsigc++&quot;;&quot;../../libsigc++/MSVC_Net2003&quot;;&quot;../../gtk-dev/include/pango-1.0&quot;;../../cairomm/cairo;&quot;../../gtk-dev/include/cairo&quot;;&quot;../../gtk-dev/include/gtk-2.0&quot;;&quot;../../gtk-dev/lib/gtk-2.0/include&quot;;&quot;../../gtk-dev/include/atk-1.0&quot;;../../gtkmm/gtk;../../gtkmm/pango;../../gtkmm/gdk;../../gtkmm/atk;../../gtkmm/MSVC_Net2003/gtkmm;../../gtkmm/MSVC_Net2003/gdkmm"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -154,27 +154,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\searchcombo\src\doublebutton.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="../searchcombo/src"
-						ObjectFile="$(IntDir)\doublebutton_c.obj"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\doublebutton_c.obj"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="..\src\DoubleButton.cc"
 				>
 			</File>
@@ -216,10 +195,6 @@
 			</File>
 			<File
 				RelativePath="..\src\gtknbcomboboxentry.c"
-				>
-			</File>
-			<File
-				RelativePath="..\searchcombo\src\gtksearchcombo.c"
 				>
 			</File>
 			<File
@@ -346,6 +321,35 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+		</Filter>
+		<Filter
+			Name="searchcombo"
+			>
+			<File
+				RelativePath="..\searchcombo\src\doublebutton.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="../searchcombo/src"
+						ObjectFile="$(IntDir)\doublebutton_c.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\doublebutton_c.obj"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\searchcombo\src\gtksearchcombo.c"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
