@@ -105,12 +105,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="../src;.;../../glibmm/glib;../../glibmm/MSVC_Net2003/glibmm;&quot;../../gtk-dev/include/glib-2.0&quot;;&quot;../../gtk-dev/lib/glib-2.0/include&quot;;&quot;../../libsigc++&quot;;&quot;../../libsigc++/MSVC_Net2003&quot;;&quot;../../gtk-dev/include/pango-1.0&quot;;../../cairomm/cairo;&quot;../../gtk-dev/include/cairo&quot;;&quot;../../gtk-dev/include/gtk-2.0&quot;;&quot;../../gtk-dev/lib/gtk-2.0/include&quot;;&quot;../../gtk-dev/include/atk-1.0&quot;;../../gtkmm/gtk;../../gtkmm/pango;../../gtkmm/gdk;../../gtkmm/atk;../../gtkmm/MSVC_Net2003/gtkmm;../../gtkmm/MSVC_Net2003/gdkmm"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -152,10 +153,34 @@
 			<File
 				RelativePath="..\src\ChoiceButton.cc"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\DoubleButton.cc"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="../searchcombo/src"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="../searchcombo/src"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\expander_hook.c"
@@ -190,20 +215,28 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\gtknbcombobox.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\gtknbcomboboxentry.c"
-				>
-			</File>
-			<File
 				RelativePath="..\src\PropertyEditor.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\src\SearchCombo.cc"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="../searchcombo/src"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="../searchcombo/src"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\SearchCombo2.cc"
@@ -342,6 +375,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories="../searchcombo/src"
 						ObjectFile="$(IntDir)\doublebutton_c.obj"
 					/>
 				</FileConfiguration>
@@ -349,6 +383,14 @@
 			<File
 				RelativePath="..\searchcombo\src\gtksearchcombo.c"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

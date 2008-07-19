@@ -155,7 +155,7 @@ void DoubleButton_Class::secondpressed_callback(doublebutton* self, int button)
 
 Glib::ObjectBase* DoubleButton_Class::wrap_new(GObject* o)
 {
-  return manage(new DoubleButton((doublebutton*)(o)));
+	return Gtk::manage(new DoubleButton((doublebutton*)(o)));
 
 }
 
