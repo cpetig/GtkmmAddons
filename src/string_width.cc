@@ -19,6 +19,7 @@
 */
 
 #include <gtk/gtkwidget.h>
+#include <cstring>
 
 gint string_width(const GtkWidget *obj,const gchar *s)
 {

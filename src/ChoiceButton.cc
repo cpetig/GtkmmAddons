@@ -50,7 +50,7 @@ void ManuProC::ChoiceButton::add(const Glib::RefPtr<Gdk::Pixbuf> &_image,
    tooltips.push_back(tooltip);
    callbacks.push_back(callback);
    // scale?
-   Gtk::Image *im=manage(new Gtk::Image(_image));
+   Gtk::Image *im=Gtk::manage(new Gtk::Image(_image));
    menu->items().push_back(Gtk::Menu_Helpers::ImageMenuElem(text,*im));
    Gtk::MenuItem *mi=(Gtk::ImageMenuItem *)&menu->items().back();
    if (tips && !tooltip.empty()) tips->set_tip(*mi, tooltip);
