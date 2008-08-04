@@ -1,82 +1,56 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7,10"
+	Version="7.10"
 	Name="GtkmmAddons"
 	ProjectGUID="{5D94A2C4-B38C-4184-9EC0-9288097C5154}"
 	RootNamespace="GtkmmAddons"
-	Keyword="Win32Proj"
-	TargetFrameworkVersion="196613"
-	>
+	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
-			Name="Win32"
-		/>
+			Name="Win32"/>
 	</Platforms>
-	<ToolFiles>
-	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../src;.;../../glibmm/glib;../../glibmm/MSVC_Net2003/glibmm;&quot;../../gtk-dev/include/glib-2.0&quot;;&quot;../../gtk-dev/lib/glib-2.0/include&quot;;&quot;../../libsigc++&quot;;&quot;../../libsigc++/MSVC_Net2003&quot;;&quot;../../gtk-dev/include/pango-1.0&quot;;../../cairomm;&quot;../../gtk-dev/include/cairo&quot;;&quot;../../gtk-dev/include/gtk-2.0&quot;;&quot;../../gtk-dev/lib/gtk-2.0/include&quot;;&quot;../../gtk-dev/include/atk-1.0&quot;;../../gtkmm/gtk;../../gtkmm/pango;../../gtkmm/gdk;../../gtkmm/atk;../../gtkmm/MSVC_Net2003/gtkmm;../../gtkmm/MSVC_Net2003/gdkmm"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
-				MinimalRebuild="true"
+				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="0"
-			/>
+				DebugInformationFormat="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCResourceCompilerTool"
-			/>
+				Name="VCLibrarianTool"/>
 			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCResourceCompilerTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -84,62 +58,41 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
+			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				EnableIntrinsicFunctions="true"
+				EnableIntrinsicFunctions="TRUE"
 				AdditionalIncludeDirectories="../src;.;../../glibmm/glib;../../glibmm/MSVC_Net2003/glibmm;&quot;../../gtk-dev/include/glib-2.0&quot;;&quot;../../gtk-dev/lib/glib-2.0/include&quot;;&quot;../../libsigc++&quot;;&quot;../../libsigc++/MSVC_Net2003&quot;;&quot;../../gtk-dev/include/pango-1.0&quot;;../../cairomm;&quot;../../gtk-dev/include/cairo&quot;;&quot;../../gtk-dev/include/gtk-2.0&quot;;&quot;../../gtk-dev/lib/gtk-2.0/include&quot;;&quot;../../gtk-dev/include/atk-1.0&quot;;../../gtkmm/gtk;../../gtkmm/pango;../../gtkmm/gdk;../../gtkmm/atk;../../gtkmm/MSVC_Net2003/gtkmm;../../gtkmm/MSVC_Net2003/gdkmm"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
+				EnableFunctionLevelLinking="TRUE"
+				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="0"
-			/>
+				DebugInformationFormat="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCResourceCompilerTool"
-			/>
+				Name="VCLibrarianTool"/>
 			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCResourceCompilerTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -148,248 +101,188 @@
 		<Filter
 			Name="Quelldateien"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\src\ChoiceButton.cc"
-				>
+				RelativePath="..\src\ChoiceButton.cc">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-					/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\DoubleButton.cc"
-				>
+				RelativePath="..\src\DoubleButton.cc">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="../searchcombo/src"
-					/>
+						AdditionalIncludeDirectories="../searchcombo/src"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="../searchcombo/src"
-					/>
+						AdditionalIncludeDirectories="../searchcombo/src"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\expander_hook.c"
-				>
+				RelativePath="..\src\expander_hook.c">
 			</File>
 			<File
-				RelativePath="..\src\Gtk2TeX.cc"
-				>
+				RelativePath="..\src\Gtk2TeX.cc">
 			</File>
 			<File
-				RelativePath="..\src\Gtk_OStream.cc"
-				>
+				RelativePath="..\src\Gtk_OStream.cc">
 			</File>
 			<File
-				RelativePath="..\src\Gtk_OStream_label.cc"
-				>
+				RelativePath="..\src\Gtk_OStream_label.cc">
 			</File>
 			<File
-				RelativePath="..\src\Gtk_OStream_optionmenu.cc"
-				>
+				RelativePath="..\src\Gtk_OStream_optionmenu.cc">
 			</File>
 			<File
-				RelativePath="..\src\Gtk_OStream_stream.cc"
-				>
+				RelativePath="..\src\Gtk_OStream_stream.cc">
 			</File>
 			<File
-				RelativePath="..\src\Gtk_OStream_TreeView.cc"
-				>
+				RelativePath="..\src\Gtk_OStream_TreeView.cc">
 			</File>
 			<File
-				RelativePath="..\src\gtkhacks.cc"
-				>
+				RelativePath="..\src\gtkhacks.cc">
 			</File>
 			<File
-				RelativePath="..\src\PropertyEditor.cc"
-				>
+				RelativePath="..\src\PropertyEditor.cc">
 			</File>
 			<File
-				RelativePath="..\src\SearchCombo.cc"
-				>
+				RelativePath="..\src\SearchCombo.cc">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="../searchcombo/src"
-					/>
+						AdditionalIncludeDirectories="../searchcombo/src"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="../searchcombo/src"
-					/>
+						AdditionalIncludeDirectories="../searchcombo/src"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\SearchCombo2.cc"
-				>
+				RelativePath="..\src\SearchCombo2.cc">
 			</File>
 			<File
-				RelativePath="..\src\string_width.cc"
-				>
+				RelativePath="..\src\string_width.cc">
 			</File>
 			<File
-				RelativePath="..\src\TeX.cc"
-				>
+				RelativePath="..\src\TeX.cc">
 			</File>
 			<File
-				RelativePath="..\src\WinFileReq.cc"
-				>
+				RelativePath="..\src\WinFileReq.cc">
 			</File>
 			<File
-				RelativePath="..\src\WinFileReq_glade.cc"
-				>
+				RelativePath="..\src\WinFileReq_glade.cc">
 			</File>
 		</Filter>
 		<Filter
 			Name="Headerdateien"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\src\callbackbuf.h"
-				>
+				RelativePath="..\src\callbackbuf.h">
 			</File>
 			<File
-				RelativePath="..\src\ChoiceButton.h"
-				>
+				RelativePath="..\src\ChoiceButton.h">
 			</File>
 			<File
-				RelativePath="..\searchcombo\src\doublebutton.h"
-				>
+				RelativePath="..\src\DoubleButton.h">
 			</File>
 			<File
-				RelativePath="..\src\DoubleButton.h"
-				>
+				RelativePath="..\searchcombo\src\doublebutton.h">
 			</File>
 			<File
-				RelativePath="..\src\expander_hook.h"
-				>
+				RelativePath="..\src\expander_hook.h">
 			</File>
 			<File
-				RelativePath="..\src\Gtk2TeX.h"
-				>
+				RelativePath="..\src\Gtk2TeX.h">
 			</File>
 			<File
-				RelativePath="..\src\Gtk_OStream.h"
-				>
+				RelativePath="..\src\Gtk_OStream.h">
 			</File>
 			<File
-				RelativePath="..\src\gtkhacks.h"
-				>
+				RelativePath="..\src\gtkhacks.h">
 			</File>
 			<File
-				RelativePath="..\src\gtknbcombobox.h"
-				>
+				RelativePath="..\src\gtknbcombobox.h">
 			</File>
 			<File
-				RelativePath="..\src\gtknbcomboboxentry.h"
-				>
+				RelativePath="..\src\gtknbcomboboxentry.h">
 			</File>
 			<File
-				RelativePath="..\searchcombo\src\gtksearchcombo.h"
-				>
+				RelativePath="..\searchcombo\src\gtksearchcombo.h">
 			</File>
 			<File
-				RelativePath="..\src\Message.h"
-				>
+				RelativePath="..\src\Message.h">
 			</File>
 			<File
-				RelativePath="..\src\PropertyEditor.h"
-				>
+				RelativePath="..\src\PropertyEditor.h">
 			</File>
 			<File
-				RelativePath="..\src\SearchCombo.h"
-				>
+				RelativePath="..\src\SearchCombo.h">
 			</File>
 			<File
-				RelativePath="..\src\SearchCombo2.h"
-				>
+				RelativePath="..\src\SearchCombo2.h">
 			</File>
 			<File
-				RelativePath="..\src\SearchComboContent.h"
-				>
+				RelativePath="..\src\SearchComboContent.h">
 			</File>
 			<File
-				RelativePath="..\src\SelectMatching.h"
-				>
+				RelativePath="..\src\SelectMatching.h">
 			</File>
 			<File
-				RelativePath="..\src\SigC2SlotEmu.h"
-				>
+				RelativePath="..\src\SigC2SlotEmu.h">
 			</File>
 			<File
-				RelativePath="..\src\TeX.h"
-				>
+				RelativePath="..\src\TeX.h">
 			</File>
 			<File
-				RelativePath="..\src\WinFileReq.hh"
-				>
+				RelativePath="..\src\WinFileReq.hh">
 			</File>
 			<File
-				RelativePath="..\src\WinFileReq_glade.hh"
-				>
+				RelativePath="..\src\WinFileReq_glade.hh">
 			</File>
 		</Filter>
 		<Filter
 			Name="Ressourcendateien"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 		<Filter
-			Name="searchcombo"
-			>
+			Name="searchcombo">
 			<File
-				RelativePath="..\searchcombo\src\doublebutton.c"
-				>
+				RelativePath="..\searchcombo\src\doublebutton.c">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories="../searchcombo/src"
-						ObjectFile="$(IntDir)\doublebutton_c.obj"
-					/>
+						ObjectFile="$(IntDir)\doublebutton_c.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						AdditionalIncludeDirectories="../searchcombo/src"
-						ObjectFile="$(IntDir)\doublebutton_c.obj"
-					/>
+						ObjectFile="$(IntDir)\doublebutton_c.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\searchcombo\src\gtksearchcombo.c"
-				>
+				RelativePath="..\searchcombo\src\gtksearchcombo.c">
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-					/>
+						AdditionalIncludeDirectories=""/>
 				</FileConfiguration>
 			</File>
 		</Filter>
