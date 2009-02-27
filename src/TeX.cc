@@ -103,7 +103,7 @@ bool TeX::TeX_uses_UTF8=true;
 std::string TeX::string2TeX(const std::string &s, const StringFlags &fl) throw()
 {  unsigned int i;
    bool in_line=false;
-   std::string ret="";
+   std::string ret;
 
    for (i = 0; i<s.size() ; i++)
    {  int value=(unsigned char)(s[i]);

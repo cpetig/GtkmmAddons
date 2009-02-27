@@ -27,7 +27,7 @@ std::streamsize Gtk::OStream::data_Label(const char *s,std::streamsize n)
 }
 
 void Gtk::OStream::erase_Label(Gtk::OStream::openmode m)
-{  if (m & std::ios::trunc) handler_data.label.widget->set_text("");
+{  if (m & std::ios::trunc) handler_data.label.widget->set_text(Glib::ustring());
 }
 
 // user_data?

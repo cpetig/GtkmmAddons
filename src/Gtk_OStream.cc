@@ -62,7 +62,7 @@ void Gtk::OStreamBase::flush()
 {  if (flush_impl) (dynamic_cast<Gtk::OStream*>(this)->*flush_impl)();
    else if (line_impl && data_impl==&OStream::default_data && !data.empty())
    {  (dynamic_cast<Gtk::OStream*>(this)->*line_impl)(data);
-      data="";
+      data=std::string();
    }
    flushed();
 }
