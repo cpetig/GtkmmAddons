@@ -3,9 +3,10 @@
 #ifndef _GTKMM_SEARCHCOMBO_H
 #define _GTKMM_SEARCHCOMBO_H
 
+
 #include <glibmm.h>
 
-/* $Id: SearchCombo.hg,v 1.6 2004/01/29 15:01:24 christof Exp $ */
+/* $Id: SearchCombo.hg,v 1.7 2004/04/29 14:24:40 christof Exp $ */
 
 /* searchcombo.h
  * 
@@ -124,13 +125,19 @@ public:
 
 public:
   //C++ methods used to invoke GTK+ virtual functions:
+#ifdef GLIBMM_VFUNCS_ENABLED
+#endif //GLIBMM_VFUNCS_ENABLED
 
 protected:
   //GTK+ Virtual Functions (override these to change behaviour):
+#ifdef GLIBMM_VFUNCS_ENABLED
+#endif //GLIBMM_VFUNCS_ENABLED
 
   //Default Signal Handlers::
+#ifdef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
   virtual void on_activate();
   virtual void on_search(gboolean * cont, GtkSCContext context);
+#endif //GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 
 
 private:
@@ -142,16 +149,18 @@ public:
   
   /**
    * @par Prototype:
-   * <tt>void %activate()</tt>
+   * <tt>void on_my_%activate()</tt>
    */
-  Glib::SignalProxy0<void> signal_activate();
+
+  Glib::SignalProxy0< void > signal_activate();
 ;
   
   /**
    * @par Prototype:
-   * <tt>void %search(gboolean * cont, GtkSCContext context)</tt>
+   * <tt>void on_my_%search(gboolean * cont, GtkSCContext context)</tt>
    */
-  Glib::SignalProxy2<void,gboolean *,GtkSCContext> signal_search();
+
+  Glib::SignalProxy2< void,gboolean *,GtkSCContext > signal_search();
 ;
   
 //  WRAP_MEMBER(value,value_in_list,value_in_list,bool,guint);
@@ -217,35 +226,74 @@ public:
   void set_start_on_idle(bool val);
     
   //: please do not use this function in new programs - it's for compatibility
-  Entry* get_entry();
+   Entry* get_entry();
   const Entry* get_entry() const;
-  
+   
   
   gint get_selected_index() const;
    
     bool empty() const {  return !get_size(); }
     guint size() const {  return get_size(); }
 
-  /**
- * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
- * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
- * the value of the property changes. 
- */
-Glib::PropertyProxy<bool> property_case_sensitive();
+  #ifdef GLIBMM_PROPERTIES_ENABLED
+/** 
+   *
+   * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
+   * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
+   * the value of the property changes.
+   */
+  Glib::PropertyProxy<bool> property_case_sensitive() ;
+#endif //#GLIBMM_PROPERTIES_ENABLED
 
-  /**
- * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
- * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
- * the value of the property changes. 
- */
-Glib::PropertyProxy<bool> property_allow_empty();
+#ifdef GLIBMM_PROPERTIES_ENABLED
+/** 
+   *
+   * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
+   * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
+   * the value of the property changes.
+   */
+  Glib::PropertyProxy_ReadOnly<bool> property_case_sensitive() const;
+#endif //#GLIBMM_PROPERTIES_ENABLED
+
+  #ifdef GLIBMM_PROPERTIES_ENABLED
+/** 
+   *
+   * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
+   * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
+   * the value of the property changes.
+   */
+  Glib::PropertyProxy<bool> property_allow_empty() ;
+#endif //#GLIBMM_PROPERTIES_ENABLED
+
+#ifdef GLIBMM_PROPERTIES_ENABLED
+/** 
+   *
+   * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
+   * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
+   * the value of the property changes.
+   */
+  Glib::PropertyProxy_ReadOnly<bool> property_allow_empty() const;
+#endif //#GLIBMM_PROPERTIES_ENABLED
    
-  /**
- * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
- * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
- * the value of the property changes. 
- */
-Glib::PropertyProxy<bool> property_value_in_list();
+  #ifdef GLIBMM_PROPERTIES_ENABLED
+/** 
+   *
+   * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
+   * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
+   * the value of the property changes.
+   */
+  Glib::PropertyProxy<bool> property_value_in_list() ;
+#endif //#GLIBMM_PROPERTIES_ENABLED
+
+#ifdef GLIBMM_PROPERTIES_ENABLED
+/** 
+   *
+   * You rarely need to use properties because there are get_ and set_ methods for almost all of them.
+   * @return A PropertyProxy that allows you to get or set the property of the value, or receive notification when
+   * the value of the property changes.
+   */
+  Glib::PropertyProxy_ReadOnly<bool> property_value_in_list() const;
+#endif //#GLIBMM_PROPERTIES_ENABLED
  
 
 };
@@ -255,8 +303,17 @@ Glib::PropertyProxy<bool> property_value_in_list();
 
 namespace Glib
 {
-  /** @relates Gtk::SearchCombo */
+  /** A Glib::wrap() method for this object.
+   * 
+   * @param object The C instance.
+   * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
+   * @result A C++ instance that wraps this C instance.
+   *
+   * @relates Gtk::SearchCombo
+   */
   Gtk::SearchCombo* wrap(GtkSearchCombo* object, bool take_copy = false);
-}
+} //namespace Glib
+
+
 #endif /* _GTKMM_SEARCHCOMBO_H */
 

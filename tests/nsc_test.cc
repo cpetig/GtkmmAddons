@@ -26,9 +26,7 @@
 #include <SearchCombo2.h>
 #include <unistd.h>
 #include <iostream>
-#if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
-#  include <sigc++/compatibility.h>
-#endif
+#include <string.h>
 
 const char * const names[]=
   {
@@ -97,7 +95,7 @@ const char * const names[]=
   };
 const int namenum=sizeof(names)/sizeof(names[0]);
 
-class comboArtikel : public SigC::Object
+class comboArtikel : public sigc::trackable
 {
         int nextval;
         Gtk::SearchCombo2 *sc;
@@ -155,12 +153,12 @@ class testwindow : public Gtk::Window
             scombo2.show();
             scombo3.show();
 
-            scombo.signal_search().connect(SigC::slot(comboart,&comboArtikel::suchfunc));
-            scombo.signal_activate().connect(SigC::slot(comboart,&comboArtikel::selectfunc));
-            scombo2.signal_search().connect(SigC::slot(comboart2,&comboArtikel::suchfunc));
-            scombo2.signal_activate().connect(SigC::slot(comboart2,&comboArtikel::selectfunc));
-            scombo3.signal_search().connect(SigC::slot(comboart3,&comboArtikel::suchfunc));
-            scombo3.signal_activate().connect(SigC::slot(comboart3,&comboArtikel::selectfunc));
+            scombo.signal_search().connect(sigc::mem_fun(comboart,&comboArtikel::suchfunc));
+            scombo.signal_activate().connect(sigc::mem_fun(comboart,&comboArtikel::selectfunc));
+            scombo2.signal_search().connect(sigc::mem_fun(comboart2,&comboArtikel::suchfunc));
+            scombo2.signal_activate().connect(sigc::mem_fun(comboart2,&comboArtikel::selectfunc));
+            scombo3.signal_search().connect(sigc::mem_fun(comboart3,&comboArtikel::suchfunc));
+            scombo3.signal_activate().connect(sigc::mem_fun(comboart3,&comboArtikel::selectfunc));
         }
         bool delete_event_impl(GdkEventAny *)
         {

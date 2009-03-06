@@ -3,9 +3,10 @@
 #ifndef _GTKMM_DOUBLEBUTTON_H
 #define _GTKMM_DOUBLEBUTTON_H
 
+
 #include <glibmm.h>
 
-/* $Id: DoubleButton.h,v 1.7 2004/04/29 14:24:40 christof Exp $ */
+/* $Id: DoubleButton.hg,v 1.4 2004/04/29 14:24:40 christof Exp $ */
 
 /* searchcombo.h
  * 
@@ -85,12 +86,18 @@ public:
 
 public:
   //C++ methods used to invoke GTK+ virtual functions:
+#ifdef GLIBMM_VFUNCS_ENABLED
+#endif //GLIBMM_VFUNCS_ENABLED
 
 protected:
   //GTK+ Virtual Functions (override these to change behaviour):
+#ifdef GLIBMM_VFUNCS_ENABLED
+#endif //GLIBMM_VFUNCS_ENABLED
 
   //Default Signal Handlers::
+#ifdef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
   virtual void on_secondpressed(int mbutton);
+#endif //GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 
 
 private:
@@ -102,9 +109,10 @@ public:
   
   /**
    * @par Prototype:
-   * <tt>void %secondpressed(int mbutton)</tt>
+   * <tt>void on_my_%secondpressed(int mbutton)</tt>
    */
-  Glib::SignalProxy1<void,int> signal_secondpressed();
+
+  Glib::SignalProxy1< void,int > signal_secondpressed();
 ;
 
 
@@ -112,10 +120,20 @@ public:
 
 }
 
+
 namespace Glib
 {
-  /** @relates ManuProC::DoubleButton */
+  /** A Glib::wrap() method for this object.
+   * 
+   * @param object The C instance.
+   * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
+   * @result A C++ instance that wraps this C instance.
+   *
+   * @relates ManuProC::DoubleButton
+   */
   ManuProC::DoubleButton* wrap(doublebutton* object, bool take_copy = false);
-}
+} //namespace Glib
+
+
 #endif /* _GTKMM_DOUBLEBUTTON_H */
 

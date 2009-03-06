@@ -44,8 +44,8 @@ class testwindow : public Gtk::Window
         testwindow() 
         {   add(testscc);
             testscc.show();
-            testscc.signal_search().connect(SigC::slot(*this,&testwindow::suchfunc));
-            testscc.signal_activate().connect(SigC::slot(*this,&testwindow::activatefunc));
+            testscc.signal_search().connect(sigc::mem_fun(*this,&testwindow::suchfunc));
+            testscc.signal_activate().connect(sigc::mem_fun(*this,&testwindow::activatefunc));
         }
         bool delete_event_impl(GdkEventAny *)
         {
