@@ -1,5 +1,5 @@
 /* gtksearchcombo - combo widget for gtk+
- * Copyright 1999-2002 Christof Petig
+ * Copyright 1999-2009 Christof Petig
  * based on gtkcombo: Copyright 1997 Paolo Molaro
  *                    Modified by the GTK+ Team and others 1997-1999.
  *
@@ -80,6 +80,7 @@ struct _GtkSearchCombo {
 	gboolean search_finished:1;	/** search is finished, simply display */
 	gboolean value_selected:1;	/** a value has been selected, do not search without explicit request */
 	gboolean reopen:1;		/** next open should be reopen */
+	gboolean in_destruction:1;	/** destroy gets called twice - once for run_dispose, then for unref 8-O */
 	
 	guint entries_max_width;	/** for optimal popup width */
 	guint entries_max_strlen;	/** speedup trick */

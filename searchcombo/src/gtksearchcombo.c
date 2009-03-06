@@ -55,7 +55,7 @@ enum {
   LAST_SIGNAL
 };
 
-const gchar * gtk_searchcombo_string_key = "gtk-searchcombo-string-value";
+const gchar * gtk_searchcombo_string_key = "gtk-searchcombo -string-value";
 static guint searchcombo_signals[LAST_SIGNAL] = { 0 };
 static GtkListItem *	gtk_searchcombo_find (const GtkSearchCombo * searchcombo);
 const gboolean select_on_refocus=TRUE;
@@ -130,6 +130,42 @@ static void gtk_searchcombo_size_allocate(GtkWidget        *widget,
 static GtkHBoxClass *parent_class = NULL;
 
 static void
+gtk_searchcombo_popdown_list (GtkSearchCombo *combo)
+{
+//  combo->current_button = 0;
+      
+  if (GTK_BUTTON (combo->button)->in_button)
+    {
+      GTK_BUTTON (combo->button)->in_button = FALSE;
+      gtk_button_released (GTK_BUTTON (combo->button));
+    }
+
+  if (GTK_WIDGET_HAS_GRAB (combo->popwin))
+    {
+      gtk_grab_remove (combo->popwin);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (GTK_WIDGET (combo)),
+				  gtk_get_current_event_time ());
+      gdk_display_keyboard_ungrab (gtk_widget_get_display (GTK_WIDGET (combo)),
+				   gtk_get_current_event_time ());
+    }
+  
+  gtk_widget_hide (combo->popwin);
+
+  gtk_window_group_add_window (gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));
+}
+
+static void        
+gtk_searchcombo_unrealize (GtkWidget *widget)
+{
+  GtkSearchCombo *scombo = GTK_SEARCHCOMBO (widget);
+
+  gtk_searchcombo_popdown_list (scombo);
+  gtk_widget_unrealize (scombo->popwin);
+  
+  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
 gtk_searchcombo_class_init (GtkSearchComboClass * klass)
 {
   GObjectClass *gobject_class;
@@ -171,6 +207,7 @@ gtk_searchcombo_class_init (GtkSearchComboClass * klass)
 
   oclass->destroy = gtk_searchcombo_destroy;
   widget_class->size_allocate = gtk_searchcombo_size_allocate;
+  widget_class->unrealize = gtk_searchcombo_unrealize;
   
   searchcombo_signals[SELECTED] =
     gtk_signal_new ("activate",
@@ -206,8 +243,10 @@ DEBUG(printf("SCB: destroy %p\n",searchcombo));
      sc->popwin = NULL;
   }
   // disconnect signals to prevent calls after object has started destruction
-  gtk_signal_disconnect_by_func(GTK_OBJECT (sc->entry),
+  if (!sc->in_destruction)
+    gtk_signal_disconnect_by_func(GTK_OBJECT (sc->entry),
             (GtkSignalFunc) gtk_searchcombo_entry_focus_out, searchcombo);
+  sc->in_destruction= TRUE;
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (*GTK_OBJECT_CLASS (parent_class)->destroy) (searchcombo);
@@ -467,6 +506,7 @@ DEBUG(printf("SCB init: idle_handler_id=%d\n",searchcombo->idle_handler_id));
   searchcombo->start_idle=TRUE;
   searchcombo->already_started=FALSE;
   searchcombo->reopen=FALSE;
+  searchcombo->in_destruction=FALSE;
   
   searchcombo->entries_max_width=FALSE;
   searchcombo->entries_max_strlen=FALSE;

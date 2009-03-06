@@ -61,25 +61,25 @@ class testwindow : public Gtk::Window
             dbutton.show();
             cbutton.show();
 
-            dbutton.signal_clicked().connect(SigC::slot(*this,&testwindow::on_clicked));
-            dbutton.signal_secondpressed().connect(SigC::slot(*this,&testwindow::on_sclicked));
+            dbutton.signal_clicked().connect(sigc::mem_fun(*this,&testwindow::on_clicked));
+            dbutton.signal_secondpressed().connect(sigc::mem_fun(*this,&testwindow::on_sclicked));
             
             {  Glib::RefPtr<Gdk::PixbufLoader> loader=Gdk::PixbufLoader::create();
 	       loader->write(rot_jpeg_data, rot_jpeg_size);
 	       loader->close();
-	       cbutton.add(loader->get_pixbuf(),"rot",SigC::bind(SigC::slot(*this,&testwindow::on_cclicked),"rot"));
+	       cbutton.add(loader->get_pixbuf(),"rot",sigc::bind(sigc::mem_fun(*this,&testwindow::on_cclicked),"rot"));
 	    }{ Glib::RefPtr<Gdk::PixbufLoader> loader=Gdk::PixbufLoader::create();
 	       loader->write(blau_jpeg_data, blau_jpeg_size);
 	       loader->close();
-	       cbutton.add(loader->get_pixbuf(),"blau",SigC::bind(SigC::slot(*this,&testwindow::on_cclicked),"blau"));
+	       cbutton.add(loader->get_pixbuf(),"blau",sigc::bind(sigc::mem_fun(*this,&testwindow::on_cclicked),"blau"));
 	    }{ Glib::RefPtr<Gdk::PixbufLoader> loader=Gdk::PixbufLoader::create();
 	       loader->write(gruen_jpeg_data, gruen_jpeg_size);
 	       loader->close();
-	       cbutton.add(loader->get_pixbuf(),"grün",SigC::bind(SigC::slot(*this,&testwindow::on_cclicked),"gruen"));
+	       cbutton.add(loader->get_pixbuf(),"grün",sigc::bind(sigc::mem_fun(*this,&testwindow::on_cclicked),"gruen"));
 	    }{ Glib::RefPtr<Gdk::PixbufLoader> loader=Gdk::PixbufLoader::create();
 	       loader->write(gelb_jpeg_data, gelb_jpeg_size);
 	       loader->close();
-	       cbutton.add(loader->get_pixbuf(),"gelb",SigC::bind(SigC::slot(*this,&testwindow::on_cclicked),"gelb"));
+	       cbutton.add(loader->get_pixbuf(),"gelb",sigc::bind(sigc::mem_fun(*this,&testwindow::on_cclicked),"gelb"));
 	    }
 	    cbutton.set_style(true,false);
         }

@@ -11,6 +11,7 @@
 /* searchcombo.h
  * 
  * Copyright (C) 1999-2002 Adolf Petig GmbH & Co. KG
+ * Copyright (C) 2008 Christof Petig
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
