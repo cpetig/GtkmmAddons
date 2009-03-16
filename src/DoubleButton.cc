@@ -30,9 +30,8 @@
 // for SigC 2.0
 #include <sigc++/slot.h>
 
-ManuProC::DoubleButton::DoubleButton() : // Mark this class as non-derived to allow C++ vfuncs to be skipped.
-  Glib::ObjectBase(0),
-  Gtk::Button(Glib::ConstructParams(doublebutton_class_.init()))
+ManuProC::DoubleButton::DoubleButton() : Glib::ObjectBase(0), //Mark this class as gtkmmproc-generated, rather than a custom class, to allow vfunc optimisations.
+  Gtk::Button(Glib::ConstructParams(doublebutton_class_.init(), (char*) 0))
 {  }
 
 namespace
@@ -105,7 +104,6 @@ const Glib::Class& DoubleButton_Class::init()
     register_derived_type(doublebutton_get_type());
 
     // Add derived versions of interfaces, if the C type implements any interfaces:
-
   }
 
   return *this;
@@ -130,7 +128,7 @@ void DoubleButton_Class::class_init_function(void* g_class, void* class_data)
 #ifdef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 void DoubleButton_Class::secondpressed_callback(doublebutton* self, int button)
 {
-  Glib::ObjectBase *const obj_base = static_cast<Glib::ObjectBase*>(
+  CppObjectType *const obj = dynamic_cast<CppObjectType*>(
       Glib::ObjectBase::_get_current_wrapper((GObject*)self));
 
   // Non-gtkmmproc-generated custom classes implicitly call the default
@@ -138,35 +136,32 @@ void DoubleButton_Class::secondpressed_callback(doublebutton* self, int button)
   // generated classes can use this optimisation, which avoids the unnecessary
   // parameter conversions if there is no possibility of the virtual function
   // being overridden:
-  if(obj_base && obj_base->is_derived_())
+  if(obj && obj->is_derived_())
   {
-    CppObjectType *const obj = dynamic_cast<CppObjectType* const>(obj_base);
-    if(obj) // This can be NULL during destruction.
+    #ifdef GLIBMM_EXCEPTIONS_ENABLED
+    try // Trap C++ exceptions which would normally be lost because this is a C callback.
     {
-      #ifdef GLIBMM_EXCEPTIONS_ENABLED
-      try // Trap C++ exceptions which would normally be lost because this is a C callback.
-      {
-      #endif //GLIBMM_EXCEPTIONS_ENABLED
-        // Call the virtual member method, which derived classes might override.
-        obj->on_secondpressed(button);
-        return;
-      #ifdef GLIBMM_EXCEPTIONS_ENABLED
-      }
-      catch(...)
-      {
-        Glib::exception_handlers_invoke();
-      }
-      #endif //GLIBMM_EXCEPTIONS_ENABLED
+    #endif //GLIBMM_EXCEPTIONS_ENABLED
+      // Call the virtual member method, which derived classes might override.
+      obj->on_secondpressed(button);
+    #ifdef GLIBMM_EXCEPTIONS_ENABLED
     }
+    catch(...)
+    {
+      Glib::exception_handlers_invoke();
+    }
+    #endif //GLIBMM_EXCEPTIONS_ENABLED
   }
-  
-  BaseClassType *const base = static_cast<BaseClassType*>(
+  else
+  {
+    BaseClassType *const base = static_cast<BaseClassType*>(
         g_type_class_peek_parent(G_OBJECT_GET_CLASS(self)) // Get the parent class of the object class (The original underlying C class).
     );
 
-  // Call the original underlying C function:
-  if(base && base->secondpressed)
-    (*base->secondpressed)(self, button);
+    // Call the original underlying C function:
+    if(base && base->secondpressed)
+      (*base->secondpressed)(self, button);
+  }
 }
 #endif //GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 

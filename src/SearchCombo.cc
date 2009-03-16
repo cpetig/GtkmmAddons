@@ -34,9 +34,8 @@
 namespace Gtk
 {
   SearchCombo::SearchCombo(bool alwaysfill,bool autoexpand)
-  	: // Mark this class as non-derived to allow C++ vfuncs to be skipped.
-  Glib::ObjectBase(0),
-  Gtk::HBox(Glib::ConstructParams(searchcombo_class_.init()))
+  	: Glib::ObjectBase(0), //Mark this class as gtkmmproc-generated, rather than a custom class, to allow vfunc optimisations.
+  Gtk::HBox(Glib::ConstructParams(searchcombo_class_.init(), (char*) 0))
   {  set_always_fill(alwaysfill);
      set_autoexpand(autoexpand);
   }
@@ -128,7 +127,6 @@ const Glib::Class& SearchCombo_Class::init()
     register_derived_type(gtk_search_combo_get_type());
 
     // Add derived versions of interfaces, if the C type implements any interfaces:
-
   }
 
   return *this;
@@ -154,7 +152,7 @@ void SearchCombo_Class::class_init_function(void* g_class, void* class_data)
 #ifdef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 void SearchCombo_Class::activate_callback(GtkSearchCombo* self)
 {
-  Glib::ObjectBase *const obj_base = static_cast<Glib::ObjectBase*>(
+  CppObjectType *const obj = dynamic_cast<CppObjectType*>(
       Glib::ObjectBase::_get_current_wrapper((GObject*)self));
 
   // Non-gtkmmproc-generated custom classes implicitly call the default
@@ -162,39 +160,36 @@ void SearchCombo_Class::activate_callback(GtkSearchCombo* self)
   // generated classes can use this optimisation, which avoids the unnecessary
   // parameter conversions if there is no possibility of the virtual function
   // being overridden:
-  if(obj_base && obj_base->is_derived_())
+  if(obj && obj->is_derived_())
   {
-    CppObjectType *const obj = dynamic_cast<CppObjectType* const>(obj_base);
-    if(obj) // This can be NULL during destruction.
+    #ifdef GLIBMM_EXCEPTIONS_ENABLED
+    try // Trap C++ exceptions which would normally be lost because this is a C callback.
     {
-      #ifdef GLIBMM_EXCEPTIONS_ENABLED
-      try // Trap C++ exceptions which would normally be lost because this is a C callback.
-      {
-      #endif //GLIBMM_EXCEPTIONS_ENABLED
-        // Call the virtual member method, which derived classes might override.
-        obj->on_activate();
-        return;
-      #ifdef GLIBMM_EXCEPTIONS_ENABLED
-      }
-      catch(...)
-      {
-        Glib::exception_handlers_invoke();
-      }
-      #endif //GLIBMM_EXCEPTIONS_ENABLED
+    #endif //GLIBMM_EXCEPTIONS_ENABLED
+      // Call the virtual member method, which derived classes might override.
+      obj->on_activate();
+    #ifdef GLIBMM_EXCEPTIONS_ENABLED
     }
+    catch(...)
+    {
+      Glib::exception_handlers_invoke();
+    }
+    #endif //GLIBMM_EXCEPTIONS_ENABLED
   }
-  
-  BaseClassType *const base = static_cast<BaseClassType*>(
+  else
+  {
+    BaseClassType *const base = static_cast<BaseClassType*>(
         g_type_class_peek_parent(G_OBJECT_GET_CLASS(self)) // Get the parent class of the object class (The original underlying C class).
     );
 
-  // Call the original underlying C function:
-  if(base && base->activate)
-    (*base->activate)(self);
+    // Call the original underlying C function:
+    if(base && base->activate)
+      (*base->activate)(self);
+  }
 }
 void SearchCombo_Class::search_callback(GtkSearchCombo* self, gboolean* cont, GtkSCContext context)
 {
-  Glib::ObjectBase *const obj_base = static_cast<Glib::ObjectBase*>(
+  CppObjectType *const obj = dynamic_cast<CppObjectType*>(
       Glib::ObjectBase::_get_current_wrapper((GObject*)self));
 
   // Non-gtkmmproc-generated custom classes implicitly call the default
@@ -202,35 +197,32 @@ void SearchCombo_Class::search_callback(GtkSearchCombo* self, gboolean* cont, Gt
   // generated classes can use this optimisation, which avoids the unnecessary
   // parameter conversions if there is no possibility of the virtual function
   // being overridden:
-  if(obj_base && obj_base->is_derived_())
+  if(obj && obj->is_derived_())
   {
-    CppObjectType *const obj = dynamic_cast<CppObjectType* const>(obj_base);
-    if(obj) // This can be NULL during destruction.
+    #ifdef GLIBMM_EXCEPTIONS_ENABLED
+    try // Trap C++ exceptions which would normally be lost because this is a C callback.
     {
-      #ifdef GLIBMM_EXCEPTIONS_ENABLED
-      try // Trap C++ exceptions which would normally be lost because this is a C callback.
-      {
-      #endif //GLIBMM_EXCEPTIONS_ENABLED
-        // Call the virtual member method, which derived classes might override.
-        obj->on_search(cont, context);
-        return;
-      #ifdef GLIBMM_EXCEPTIONS_ENABLED
-      }
-      catch(...)
-      {
-        Glib::exception_handlers_invoke();
-      }
-      #endif //GLIBMM_EXCEPTIONS_ENABLED
+    #endif //GLIBMM_EXCEPTIONS_ENABLED
+      // Call the virtual member method, which derived classes might override.
+      obj->on_search(cont, context);
+    #ifdef GLIBMM_EXCEPTIONS_ENABLED
     }
+    catch(...)
+    {
+      Glib::exception_handlers_invoke();
+    }
+    #endif //GLIBMM_EXCEPTIONS_ENABLED
   }
-  
-  BaseClassType *const base = static_cast<BaseClassType*>(
+  else
+  {
+    BaseClassType *const base = static_cast<BaseClassType*>(
         g_type_class_peek_parent(G_OBJECT_GET_CLASS(self)) // Get the parent class of the object class (The original underlying C class).
     );
 
-  // Call the original underlying C function:
-  if(base && base->search)
-    (*base->search)(self, cont, context);
+    // Call the original underlying C function:
+    if(base && base->search)
+      (*base->search)(self, cont, context);
+  }
 }
 #endif //GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 

@@ -148,17 +148,17 @@ public:
   explicit SearchCombo(bool always_fill=false, bool autoexpand=false);
   
   
-  /**
+/**
    * @par Prototype:
-   * <tt>void on_my_%activate()</tt>
+   * <tt>void %activate()</tt>
    */
 
   Glib::SignalProxy0< void > signal_activate();
 ;
   
-  /**
+/**
    * @par Prototype:
-   * <tt>void on_my_%search(gboolean * cont, GtkSCContext context)</tt>
+   * <tt>void %search(gboolean * cont, GtkSCContext context)</tt>
    */
 
   Glib::SignalProxy2< void,gboolean *,GtkSCContext > signal_search();
@@ -304,13 +304,10 @@ public:
 
 namespace Glib
 {
-  /** A Glib::wrap() method for this object.
-   * 
-   * @param object The C instance.
+  /** @relates Gtk::SearchCombo
+   * @param object The C instance
    * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
    * @result A C++ instance that wraps this C instance.
-   *
-   * @relates Gtk::SearchCombo
    */
   Gtk::SearchCombo* wrap(GtkSearchCombo* object, bool take_copy = false);
 } //namespace Glib
