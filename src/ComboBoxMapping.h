@@ -21,47 +21,27 @@
 #include <gtkmm/comboboxtext.h>
 
 template <class T>
-struct ComboBoxMappingEntry
+struct ComboBoxMapping
 {
   T value;
   Glib::ustring name;
 };
 
 template <class T>
- typedef ComboBoxMappingEntry<T> ComboBoxMapping[];
-
-#if 0
-template <class T>
- class ComboBoxMapping : ComboBoxMappingArray
-{
-  
-};
-#endif
-
-//namespace Gtk
-//{
-//  class ComboBoxText;
-//};
-
-// to pass both as arguments
-#define ARRAY_WITH_SIZE(A) (A), (sizeof(A)/sizeof(A[0]))
-
-#if 1
-template <class T>
- void init(Gtk::ComboBoxText &widget, ComboBoxMapping<T> const& entries);
+ void init(Gtk::ComboBoxText &widget, T const& entries);
 
 template <class T>
- void set(Gtk::ComboBoxText &widget, ComboBoxMapping<T> const& entries, T const& what);
-
-template <class T>
- T get(Gtk::ComboBoxText const&widget, ComboBoxMapping<T> const& entries);
-
-template <class T>
- void init(Gtk::ComboBoxText &widget, ComboBoxMapping<T> const& entries)
+ void init(Gtk::ComboBoxText &widget, T const& entries)
 {
   for (unsigned i=0; i< sizeof(entries)/sizeof(entries[0]); ++i)
   {
-    widget->append_text(entries[i].name);
+    widget.append_text(entries[i].name);
   }
 }
-#endif
+
+/*template <class T, class X>
+ void set(Gtk::ComboBoxText &widget, T const& entries, T const& what);
+
+template <class T>
+ T get(Gtk::ComboBoxText const&widget, T const& entries);
+*/

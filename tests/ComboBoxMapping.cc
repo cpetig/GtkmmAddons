@@ -22,7 +22,7 @@
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 
-ComboBoxMapping<int> map= { { 20, "twenty" }, { 30, "thirty" } };
+ComboBoxMapping<int> intmap[]= { { 20, "twenty" }, { 30, "thirty" } };
 
 class testwindow : public Gtk::Window
 {
@@ -34,7 +34,8 @@ class testwindow : public Gtk::Window
         {
             add(combo);
             combo.show();
-            init(combo, map);
+            init(combo, intmap);
+//            init(combo, ARRAY_WITH_SIZE(intmap));
         }
 };
 
