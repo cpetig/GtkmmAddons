@@ -20,6 +20,10 @@
 
 #include <gtkmm/comboboxtext.h>
 
+// wrapper functions to associate a ComboBoxText with a set of named choices (of arbitrary data type)
+
+// see ../test/ComboBoxMapping for a very simple example
+
 template <class T>
 struct ComboBoxMapping
 {
@@ -33,15 +37,28 @@ template <class T>
 template <class T>
  void init(Gtk::ComboBoxText &widget, T const& entries)
 {
+  widget.clear_items();
   for (unsigned i=0; i< sizeof(entries)/sizeof(entries[0]); ++i)
   {
     widget.append_text(entries[i].name);
   }
 }
 
-/*template <class T, class X>
- void set(Gtk::ComboBoxText &widget, T const& entries, T const& what);
+template <class T>
+ void set(Gtk::ComboBoxText &widget, ComboBoxMapping<T> const* entries, T const& what)
+{
+  unsigned size=widget.get_model()->children().size();
+  for (unsigned i=0; i<size; ++i)
+    if (entries[i].value==what)
+    { widget.set_active(i);
+      return;
+    }
+  widget.set_active(-1);
+}
 
 template <class T>
- T get(Gtk::ComboBoxText const&widget, T const& entries);
-*/
+ T get(Gtk::ComboBoxText const&widget, ComboBoxMapping<T> const* entries)
+{
+  if (widget.get_active_row_number()<0) return T();
+  return entries[widget.get_active_row_number()].value;
+}
