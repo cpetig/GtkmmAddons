@@ -24,8 +24,11 @@
 
 // see ../test/ComboBoxMapping for a very simple example
 
+namespace ComboBoxMapping
+{
+
 template <class T>
-struct ComboBoxMapping
+struct Entry
 {
   T value;
   Glib::ustring name;
@@ -45,7 +48,7 @@ template <class T>
 }
 
 template <class T>
- void set(Gtk::ComboBoxText &widget, ComboBoxMapping<T> const* entries, T const& what)
+ void set(Gtk::ComboBoxText &widget, Entry<T> const* entries, T const& what)
 {
   unsigned size=widget.get_model()->children().size();
   for (unsigned i=0; i<size; ++i)
@@ -57,8 +60,10 @@ template <class T>
 }
 
 template <class T>
- T get(Gtk::ComboBoxText const&widget, ComboBoxMapping<T> const* entries)
+ T get(Gtk::ComboBoxText const&widget, Entry<T> const* entries)
 {
   if (widget.get_active_row_number()<0) return T();
   return entries[widget.get_active_row_number()].value;
 }
+
+} // namespace

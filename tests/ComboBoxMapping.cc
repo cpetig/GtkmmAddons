@@ -23,7 +23,7 @@
 #include <gtkmm/window.h>
 #include <iostream>
 
-ComboBoxMapping<int> intmap[]= { { 20, "twenty" }, { 30, "thirty" } };
+ComboBoxMapping::Entry<int> intmap[]= { { 20, "twenty" }, { 30, "thirty" } };
 
 class testwindow : public Gtk::Window
 {
@@ -36,14 +36,14 @@ class testwindow : public Gtk::Window
             add(combo);
             combo.show();
             init(combo, intmap);
-            set(combo, intmap, int());
-            std::cout << get(combo, intmap) << '\n';
-            set(combo, intmap, 20);
-            std::cout << get(combo, intmap) << '\n';
+            ComboBoxMapping::set(combo, intmap, int());
+            std::cout << ComboBoxMapping::get(combo, intmap) << '\n';
+            ComboBoxMapping::set(combo, intmap, 20);
+            std::cout << ComboBoxMapping::get(combo, intmap) << '\n';
         }
         ~testwindow()
         {
-            std::cout << get(combo, intmap) << '\n';
+            std::cout << ComboBoxMapping::get(combo, intmap) << '\n';
         }
 };
 
