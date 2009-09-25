@@ -151,7 +151,7 @@ gtk_searchcombo_popdown_list (GtkSearchCombo *combo)
   
   gtk_widget_hide (combo->popwin);
 
-#if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>9
+#if GTK_CHECK_VERSION(2,9,0)  // GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>9
   gtk_window_group_add_window (gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));
 #else
   gtk_window_group_add_window (_gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));  
