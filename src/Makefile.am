@@ -25,7 +25,7 @@ libGtkmmAddons_a_SOURCES = Gtk_OStream_label.cc \
 
 BUILT_SOURCES=SearchCombo.cc SearchCombo.h gtksearchcombo.c gtksearchcombo.h \
 	gtkmm DoubleButton.h DoubleButton.cc doublebutton.c doublebutton.h \
-	WinFileReq_glade.hh WinFileReq.hh
+	WinFileReq_glade.hh WinFileReq.hh ComboBoxMapping.hh
 
 EXTRA_DIST=SearchCombo.hg SearchCombo.ccg private/SearchCombo_p.h \
 	WinFileReq_glade.cc 
@@ -46,3 +46,6 @@ DoubleButton.cc DoubleButton.h: gtkmm DoubleButton.hg DoubleButton.ccg
 gtksearchcombo.h gtksearchcombo.c doublebutton.c doublebutton.h \
 		: $(top_srcdir)/searchcombo/src/$@
 	ln -sf $(top_srcdir)/searchcombo/src/$@ .
+
+ComboBoxMapping.hh: ComboBoxMapping.h
+	ln -sf $^ $@
