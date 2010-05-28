@@ -162,6 +162,11 @@ std::string WinFileReq::run(const std::string &file,
 	Gtk::Window *parent)
 {
   std::string res;
-  WinFileReq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
+  {
+    WinFileReq rq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
+#ifndef WIN32
+    static_cast<Gtk::Dialog&>(rq).run();
+#endif
+  }
   return res;
 }
