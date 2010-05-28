@@ -35,15 +35,15 @@ void WinFileReq::on_cancel()
 // don't ask me why this does not work:
 // #  include <sigc++/compatibility.h>
 // /usr/include/sigc++-2.0/sigc++/object_slot.h: In function `
-//    SigC::Slot0<T_return> SigC::slot(T_obj1&, T_return (T_obj2::*)()) [with 
+//    SigC::Slot0<T_return> SigC::slot(T_obj1&, T_return (T_obj2::*)()) [with
 //    T_return = void, T_obj1 = WinFileReq_glade, T_obj2 = WinFileReq_glade]':
 // WinFileReq_glade.cc:35:   instantiated from here
-// /usr/include/sigc++-2.0/sigc++/object_slot.h:32: error: cannot convert from 
+// /usr/include/sigc++-2.0/sigc++/object_slot.h:32: error: cannot convert from
 //    base `sigc::trackable' to derived type `WinFileReq_glade' via virtual base `
 //    sigc::trackable'
-      
+
 namespace SigC
-{  template <class T> 
+{  template <class T>
     Slot0<void> slot(T &t, void (T::*p)()) { return sigc::mem_fun(t,p); }
 }
 #endif
@@ -52,7 +52,7 @@ namespace SigC
 #endif
 
 WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
-                std::string file, std::string filter, 
+                std::string file, std::string filter,
                 std::string extension, std::string title, bool load,
 		Gtk::Window *parent, bool pass_cancel)
 #ifndef __MINGW32__
@@ -67,7 +67,7 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    // file is assumed to have UTF-8 encoding
    TagStream::utf82iso(file);
    TagStream::utf82iso(title);
-   
+
    TagStream::utf82iso(filter);
    TagStream::utf82iso(extension);
 
@@ -82,9 +82,9 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
      bi.pszDisplayName = buf;
      bi.lpszTitle = title.c_str();
      bi.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
-     
+
      LPITEMIDLIST pidl=SHBrowseForFolder(&bi);
-     if (pidl) 
+     if (pidl)
      { // get the name of the folder
        if ( SHGetPathFromIDList ( pidl, buf ) )
        { std::string result=buf;
@@ -97,18 +97,18 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
         {
             imalloc->Free ( pidl );
             imalloc->Release ( );
-        }     
+        }
      }
      else if (pass_cancel)
         const_cast<sigc::slot<void,const std::string &>&>(sl)(std::string());
      return;
    }
-   
+
    OPENFILENAME ofn;
 
    ZeroMemory(&ofn, sizeof (OPENFILENAME));
    ofn.lStructSize = sizeof (OPENFILENAME);
-   if (parent) ofn.hwndOwner = (HWND)GDK_WINDOW_HWND(parent->get_window()->gobj()); 
+   if (parent) ofn.hwndOwner = (HWND)GDK_WINDOW_HWND(parent->get_window()->gobj());
    ofn.lpstrFile = buf;
    ofn.nMaxFile = sizeof buf;
    if (filter.empty() && !extension.empty() && !title.empty())
@@ -120,7 +120,7 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    ofn.nFilterIndex = 1;
    ofn.lpstrDefExt= extension.c_str();
    ofn.lpstrTitle = title.c_str();
-   ofn.Flags = OFN_PATHMUSTEXIST 
+   ofn.Flags = OFN_PATHMUSTEXIST
    		| (load ? OFN_FILEMUSTEXIST : 0);
    if (!file.empty() && file[file.size()-1]=='\\')
    {  *buf=0;
@@ -131,7 +131,7 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    if (load) res=GetOpenFileName(&ofn);
    else res=GetSaveFileName(&ofn);
 
-   if (res) 
+   if (res)
    { std::string result=buf;
      TagStream::utf82iso(result);
      const_cast<sigc::slot<void,const std::string &>&>(sl)(result);
@@ -149,4 +149,19 @@ void WinFileReq::create(const sigc::slot<void,const std::string &> &sl,const std
      new
 #endif
        WinFileReq(sl,file,filter,extension,title,load,parent,pass_cancel);
+}
+
+static void sassign(std::string const& b, std::string * s)
+{
+  *s=b;
+}
+
+std::string WinFileReq::run(const std::string &file,
+	std::string filter, std::string extension,
+	std::string title, bool load,
+	Gtk::Window *parent)
+{
+  std::string res;
+  WinFileReq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
+  return res;
 }

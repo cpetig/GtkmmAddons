@@ -17,14 +17,14 @@
 #endif
 
 class WinFileReq
-#ifndef __MINGW32__  
+#ifndef __MINGW32__
 			 : public WinFileReq_glade
-#endif  
+#endif
 {
 #ifndef __MINGW32__
 	sigc::slot<void,const std::string &> slot;
 	bool call_on_cancel;
-	
+
         void on_ok_button1_clicked();
         void on_cancel();
 #endif
@@ -36,5 +36,10 @@ public:
 	static void create(const sigc::slot<void,const std::string &> &sl,const std::string &file,
 		std::string filter=std::string(), std::string extension=std::string(), std::string title=std::string(), bool load=true,
 		Gtk::Window *parent=0,bool pass_cancel=false);
+	// most natural way to use this requester (blocking)
+	static std::string run(const std::string &file,
+		std::string filter=std::string(), std::string extension=std::string(),
+		std::string title=std::string(), bool load=true,
+		Gtk::Window *parent=0);
 };
 #endif
