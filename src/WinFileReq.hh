@@ -24,6 +24,7 @@ class WinFileReq
 #ifndef __MINGW32__
 	sigc::slot<void,const std::string &> slot;
 	bool call_on_cancel;
+	bool dont_delete;
 
         void on_ok_button1_clicked();
         void on_cancel();

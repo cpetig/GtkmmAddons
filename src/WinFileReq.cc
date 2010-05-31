@@ -22,12 +22,12 @@ class TagStream { public: static void utf82iso(std::string &s); };
 #ifndef __MINGW32__
 void WinFileReq::on_ok_button1_clicked()
 {  slot(get_filename());
-   delete this;
+   if (!dont_delete) delete this;
 }
 
 void WinFileReq::on_cancel()
 {  if (call_on_cancel) slot(std::string());
-   delete this;
+   if (!dont_delete) delete this;
 }
 
 #if 0 && GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>2
@@ -56,7 +56,7 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
                 std::string extension, std::string title, bool load,
 		Gtk::Window *parent, bool pass_cancel)
 #ifndef __MINGW32__
-	: slot(sl), call_on_cancel(pass_cancel)
+	: slot(sl), call_on_cancel(pass_cancel), dont_delete()
 #endif
 {
 #ifndef __MINGW32__
@@ -163,13 +163,11 @@ std::string WinFileReq::run(const std::string &file,
 {
   std::string res;
   {
-
-#ifndef __MINGW32__
-    WinFileReq *obj=new
-#endif
-	WinFileReq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
+    WinFileReq rq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
 #ifndef WIN32
-    obj->run;
+    rq.dont_delete=true;
+    static_cast<Gtk::Dialog&>(rq).run();
+    rq.hide();
 #endif
   }
   return res;
