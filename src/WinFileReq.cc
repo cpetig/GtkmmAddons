@@ -163,10 +163,13 @@ std::string WinFileReq::run(const std::string &file,
 {
   std::string res;
   {
-    WinFileReq rq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
+
+#ifndef __MINGW32__
+    WinFileReq *obj=new
+#endif
+	WinFileReq(sigc::bind(sigc::ptr_fun(&sassign),&res),file,filter,extension,title,load,parent,false);
 #ifndef WIN32
-    static_cast<Gtk::Dialog&>(rq).run();
-    rq.hide();
+    obj->run;
 #endif
   }
   return res;
