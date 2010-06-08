@@ -18,6 +18,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <map>
 #include <gtkmm/comboboxtext.h>
 
 // wrapper functions to associate a ComboBoxText with a set of named choices (of arbitrary data type)
@@ -31,7 +32,7 @@ template <class T>
  void init(Gtk::ComboBoxText &widget, std::map<T,Glib::ustring> const& entries)
 {
   widget.clear_items();
-  for (std::map<T,Glib::ustring>::const_iterator i=entries.begin(); i!=entries.end(); ++i)
+  for (typename std::map<T,Glib::ustring>::const_iterator i=entries.begin(); i!=entries.end(); ++i)
   {
     widget.append_text(i->second);
   }
@@ -40,7 +41,7 @@ template <class T>
 template <class T>
  void set(Gtk::ComboBoxText &widget, std::map<T,Glib::ustring> const& entries, T const& what)
 {
-  std::map<T,Glib::ustring>::const_iterator j=entries.begin();
+  typename std::map<T,Glib::ustring>::const_iterator j=entries.begin();
   for (unsigned i=0; j!=entries.end(); ++i, ++j)
     if (j->first==what)
     { widget.set_active(i);
@@ -54,7 +55,7 @@ template <class T>
 {
   if (widget.get_active_row_number()<0) return T();
   int index=widget.get_active_row_number();
-  for (std::map<T,Glib::ustring>::const_iterator i=entries.begin(); i!=entries.end(); ++i,--index)
+  for (typename std::map<T,Glib::ustring>::const_iterator i=entries.begin(); i!=entries.end(); ++i,--index)
   {
     if (!index) return i->first;
   }
