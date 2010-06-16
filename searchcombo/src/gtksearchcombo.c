@@ -99,14 +99,14 @@ static void gtk_searchcombo_entry_changed(GtkEntry * entry,
 static gint gtk_searchcombo_button_click(GtkButton * button, GtkSearchCombo * searchcombo);
 static void gtk_searchcombo_stop_if_running(GtkSearchCombo * searchcombo);
 static void gtk_searchcombo_clear_list(GtkSearchCombo * searchcombo);
-static gint gtk_searchcombo_entry_key_press  (GtkEntry     *widget, 
-                                               GdkEventKey   *event, 
+static gint gtk_searchcombo_entry_key_press  (GtkEntry     *widget,
+                                               GdkEventKey   *event,
                                                GtkSearchCombo      *searchcombo);
-#if 0 // ???                                               
+#if 0 // ???
 static gint         gtk_searchcombo_window_key_press   (GtkWidget        *window,
                                                  GdkEventKey      *event,
                                                  GtkSearchCombo         *searchcombo);
-#endif                                                 
+#endif
 static void         gtk_searchcombo_set_property       (GObject         *object,
                                                  guint            prop_id,
                                                  const GValue    *value,
@@ -115,7 +115,7 @@ static void         gtk_searchcombo_get_property       (GObject         *object,
                                                  guint            prop_id,
                                                  GValue          *value,
                                                  GParamSpec      *pspec);
-                                               
+
 static gchar *      gtk_searchcombo_func            (GtkListItem  *li);
 static gint gtk_searchcombo_capture_focus (GtkSearchCombo * searchcombo);
 static gint gtk_searchcombo_complete(GtkSearchCombo *searchcombo);
@@ -135,7 +135,7 @@ static void
 gtk_searchcombo_popdown_list (GtkSearchCombo *combo)
 {
 //  combo->current_button = 0;
-      
+
   if (GTK_BUTTON (combo->button)->in_button)
     {
       GTK_BUTTON (combo->button)->in_button = FALSE;
@@ -150,26 +150,26 @@ gtk_searchcombo_popdown_list (GtkSearchCombo *combo)
       gdk_display_keyboard_ungrab (gtk_widget_get_display (GTK_WIDGET (combo)),
 				   gtk_get_current_event_time ());
     }
-  
+
   gtk_widget_hide (combo->popwin);
 
 
 // GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>9
-#if GTK_CHECK_VERSION(2,9,0)  
+#if GTK_CHECK_VERSION(2,9,0)
   gtk_window_group_add_window (gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));
 #else
-  gtk_window_group_add_window (_gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));  
-#endif  
+  gtk_window_group_add_window (_gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));
+#endif
 }
 
-static void        
+static void
 gtk_searchcombo_unrealize (GtkWidget *widget)
 {
   GtkSearchCombo *scombo = GTK_SEARCHCOMBO (widget);
 
   gtk_searchcombo_popdown_list (scombo);
   gtk_widget_unrealize (scombo->popwin);
-  
+
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
@@ -184,10 +184,10 @@ gtk_searchcombo_class_init (GtkSearchComboClass * klass)
   parent_class = gtk_type_class (GTK_TYPE_HBOX);
   oclass = (GtkObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
-  
-  gobject_class->set_property = gtk_searchcombo_set_property; 
-  gobject_class->get_property = gtk_searchcombo_get_property; 
-  
+
+  gobject_class->set_property = gtk_searchcombo_set_property;
+  gobject_class->get_property = gtk_searchcombo_get_property;
+
   g_object_class_install_property (gobject_class,
                                    PROP_CASE_SENSITIVE,
                                    g_param_spec_boolean ("case_sensitive",
@@ -216,7 +216,7 @@ gtk_searchcombo_class_init (GtkSearchComboClass * klass)
   oclass->destroy = gtk_searchcombo_destroy;
   widget_class->size_allocate = gtk_searchcombo_size_allocate;
   widget_class->unrealize = gtk_searchcombo_unrealize;
-  
+
   searchcombo_signals[SELECTED] =
     gtk_signal_new ("activate",
 		    GTK_RUN_LAST | GTK_RUN_ACTION, // ???
@@ -230,12 +230,12 @@ gtk_searchcombo_class_init (GtkSearchComboClass * klass)
 		    GTK_CLASS_TYPE(oclass),
 		    GTK_SIGNAL_OFFSET (GtkSearchComboClass, search),
 		    gtk_marshal_VOID__POINTER_INT,
-		    GTK_TYPE_NONE, 
+		    GTK_TYPE_NONE,
 		    2,
 		    GTK_TYPE_POINTER,
 		    GTK_TYPE_INT);
 //  gtk_object_class_add_signals (object_class, searchcombo_signals, LAST_SIGNAL);
-  
+
   klass->search=NULL;
   klass->activate=NULL;
 }
@@ -267,7 +267,7 @@ gtk_searchcombo_get_pos (GtkSearchCombo * searchcombo, gint * x, gint * y, gint 
   GtkBin *popwin;
   GtkWidget *widget;
   GtkScrolledWindow *popup;
-  
+
   gint real_height;
   GtkRequisition list_requisition;
   gboolean show_hscroll = FALSE;
@@ -278,78 +278,78 @@ gtk_searchcombo_get_pos (GtkSearchCombo * searchcombo, gint * x, gint * y, gint 
   gint work_height;
   gint old_height;
   gint old_width;
-  
+
   widget = GTK_WIDGET(searchcombo);
   popup  = GTK_SCROLLED_WINDOW (searchcombo->popup);
   popwin = GTK_BIN (searchcombo->popwin);
-  
+
   gdk_window_get_origin (searchcombo->entry->window, x, y);
-  real_height = MIN (searchcombo->entry->requisition.height, 
+  real_height = MIN (searchcombo->entry->requisition.height,
 		     searchcombo->entry->allocation.height);
   *y += real_height;
   avail_height = gdk_screen_height () - *y;
-  
+
   gtk_widget_size_request (searchcombo->list, &list_requisition);
-  min_height = MIN (list_requisition.height, 
+  min_height = MIN (list_requisition.height,
 		    popup->vscrollbar->requisition.height);
   if (!GTK_LIST (searchcombo->list)->children)
   {  list_requisition.height += EMPTY_LIST_HEIGHT;
      if (searchcombo->start_idle) list_requisition.height += START_IDLE_HEIGHT;
   }
-  
+
   alloc_width = (widget->allocation.width -
 		 2 * popwin->child->style->xthickness -
 		 2 * GTK_CONTAINER (popwin->child)->border_width -
 		 2 * GTK_CONTAINER (searchcombo->popup)->border_width -
-		 2 * GTK_CONTAINER (GTK_BIN (popup)->child)->border_width - 
+		 2 * GTK_CONTAINER (GTK_BIN (popup)->child)->border_width -
 		 2 * GTK_BIN (popup)->child->style->xthickness);
-  
+
   work_height = (2 * popwin->child->style->ythickness +
 		 2 * GTK_CONTAINER (popwin->child)->border_width +
 		 2 * GTK_CONTAINER (searchcombo->popup)->border_width +
 		 2 * GTK_CONTAINER (GTK_BIN (popup)->child)->border_width +
 		 2 * GTK_BIN (popup)->child->style->xthickness);
-  
-  do 
+
+  do
     {
       old_width = alloc_width;
       old_height = work_height;
-      
+
       if (!show_hscroll &&
 	  alloc_width < list_requisition.width)
 	{
 	  work_height += popup->hscrollbar->requisition.height +
-	    GTK_SCROLLED_WINDOW_GET_CLASS 
+	    GTK_SCROLLED_WINDOW_GET_CLASS
 	    (searchcombo->popup)->scrollbar_spacing;
 	  show_hscroll = TRUE;
 	}
-      if (!show_vscroll && 
+      if (!show_vscroll &&
 	  work_height + list_requisition.height > avail_height)
 	{
-	  if (work_height + min_height > avail_height && 
+	  if (work_height + min_height > avail_height &&
 	      *y - real_height > avail_height)
 	    {
 	      *y -= (work_height + list_requisition.height + real_height);
 	      break;
 	    }
-	  alloc_width -= 
+	  alloc_width -=
 	    popup->vscrollbar->requisition.width +
-	    GTK_SCROLLED_WINDOW_GET_CLASS 
+	    GTK_SCROLLED_WINDOW_GET_CLASS
 	    (searchcombo->popup)->scrollbar_spacing;
 	  show_vscroll = TRUE;
 	}
     } while (old_width != alloc_width || old_height != work_height);
-  
-  if (searchcombo->entries_max_width > alloc_width) 
+
+  if (searchcombo->entries_max_width > alloc_width)
      *width=searchcombo->entries_max_width+(alloc_width-widget->allocation.width);
-  else 
+  else
      *width = widget->allocation.width;
 
   if (show_vscroll)
     *height = avail_height;
   else
     *height = work_height + list_requisition.height;
-  
+
   if (*x < 0)
     *x = 0;
 }
@@ -370,14 +370,14 @@ gtk_searchcombo_popup_list (GtkSearchCombo * searchcombo)
 }
 
 /** emit 'activate' */
-static void        
+static void
 gtk_searchcombo_activate (GtkWidget        *widget,
 		    GtkSearchCombo         *searchcombo)
 {  g_return_if_fail (widget != NULL);
    g_return_if_fail (GTK_IS_ENTRY (widget));
    g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
-   
+
    gtk_widget_hide (searchcombo->popwin);
    gtk_searchcombo_stop_if_running(searchcombo);
    gtk_signal_emit (GTK_OBJECT (searchcombo), searchcombo_signals[SELECTED]);
@@ -415,14 +415,14 @@ DEBUG(printf("Compare string %s\n",text));
   return NULL;
 }
 
-static void        
+static void
 gtk_searchcombo_activate_by_enter (GtkWidget        *widget,
 		    GtkSearchCombo         *searchcombo)
 {  g_return_if_fail (widget != NULL);
    g_return_if_fail (GTK_IS_ENTRY (widget));
    g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
-   
+
    if (searchcombo->search_in_progress && !searchcombo->already_started
    	 && !searchcombo->autoexpand)
       // autoexpand might activate within fill_idle, so it's disallowed
@@ -455,7 +455,7 @@ gtk_searchcombo_activate_by_enter (GtkWidget        *widget,
                // like gtk_searchcombo_fill_list but without popping up
                gtk_searchcombo_fill_list(searchcombo);
                goto try_to_get_entry;
-#if 0               
+#if 0
                searchcombo->value_selected=FALSE;
                searchcombo->search_finished=FALSE;
                searchcombo->search_in_progress=TRUE;
@@ -481,7 +481,7 @@ gtk_searchcombo_activate_by_enter (GtkWidget        *widget,
       	          searchcombo->search_in_progress=TRUE;
       	          searchcombo->value_selected=FALSE;
       	       }
-#endif      	       
+#endif
            }
            else return;
         }
@@ -515,10 +515,10 @@ DEBUG(printf("SCB init: idle_handler_id=%d\n",searchcombo->idle_handler_id));
   searchcombo->already_started=FALSE;
   searchcombo->reopen=FALSE;
   searchcombo->in_destruction=FALSE;
-  
+
   searchcombo->entries_max_width=FALSE;
   searchcombo->entries_max_strlen=FALSE;
-  
+
   searchcombo->entry = gtk_entry_new ();
   searchcombo->button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET(searchcombo->button), GTK_CAN_FOCUS);
@@ -613,8 +613,8 @@ gtk_searchcombo_new (void)
 
 /** simply hide the window */
 static gint
-gtk_searchcombo_entry_focus_out (GtkEntry      *entry, 
-                                               GdkEventFocus *event, 
+gtk_searchcombo_entry_focus_out (GtkEntry      *entry,
+                                               GdkEventFocus *event,
                                                GtkSearchCombo      *searchcombo)
 {  g_return_val_if_fail (searchcombo != NULL, FALSE);
    g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo), FALSE);
@@ -628,16 +628,16 @@ gtk_searchcombo_entry_focus_out (GtkEntry      *entry,
 /** call select */
 static gint gtk_searchcombo_fill_idle (GtkSearchCombo * searchcombo)
 {     gboolean continue_=FALSE;
-      
+
 DEBUG(printf("SCB: fill_idle\n"));
       g_return_val_if_fail (searchcombo != NULL, FALSE);
       g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo), FALSE);
       GDK_THREADS_ENTER ();
       g_assert(searchcombo->search_in_progress && !searchcombo->search_finished);
-      
+
       DEBUG(printf("fill idle: already_started=%d\n",searchcombo->already_started));
       gtk_signal_emit (GTK_OBJECT (searchcombo), searchcombo_signals[SEARCH],
-   		&continue_, 
+   		&continue_,
    		searchcombo->already_started?GTK_SEARCH_FETCH:
    		(searchcombo->reopen?GTK_SEARCH_REOPEN:GTK_SEARCH_OPEN));
       searchcombo->already_started=TRUE;
@@ -659,22 +659,22 @@ static gboolean gtksearchcombo_close_search(GtkSearchCombo * searchcombo, gint *
    g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo), FALSE);
       searchcombo->search_in_progress=FALSE;
       searchcombo->search_finished=TRUE;
-      if (searchcombo->idle_handler_id!=-1) 
+      if (searchcombo->idle_handler_id!=-1)
       {  gtk_idle_remove(searchcombo->idle_handler_id);
          searchcombo->idle_handler_id=-1;
 DEBUG(printf("SCB cs: idle_handler_id=%d\n",searchcombo->idle_handler_id));
       }
-         
+
       gtk_signal_emit (GTK_OBJECT (searchcombo), searchcombo_signals[SEARCH],
    		NULL, GTK_SEARCH_CLOSE);
       if (searchcombo->autoexpand && !searchcombo->backspace)
       {  gint children_present=0;
-      
+
          if (children_present_p) children_present=*children_present_p;
          else children_present=g_list_length(
       			gtk_container_children(GTK_CONTAINER(searchcombo->list)));
       	 if (children_present!=1) return FALSE;
-      	 
+
          gtk_searchcombo_do_autoexpand(searchcombo);
          return TRUE; /* do not pop up */
       }
@@ -688,7 +688,7 @@ gtk_searchcombo_fill_list(GtkSearchCombo      *searchcombo)
    gint children_present=-1;
    g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
-   
+
    searchcombo->reopen=searchcombo->value_selected;
    gtk_searchcombo_clear_list(searchcombo);
    g_return_if_fail (!searchcombo->search_in_progress);
@@ -697,7 +697,7 @@ gtk_searchcombo_fill_list(GtkSearchCombo      *searchcombo)
    searchcombo->value_selected=FALSE;
 DEBUG(printf("SCB fl: value_selected=%d si=%d\n",searchcombo->value_selected,
       searchcombo->start_idle));
-   
+
    if (!searchcombo->start_idle)
    {  while (children_present<SEARCHCOMBO_FIRST_SEARCH)
       {  continue_=FALSE;
@@ -717,7 +717,7 @@ DEBUG(printf("SCB fl: value_selected=%d si=%d\n",searchcombo->value_selected,
    {  g_assert(searchcombo->idle_handler_id==-1);
       searchcombo->idle_handler_id=gtk_idle_add ((GtkFunction) gtk_searchcombo_fill_idle, searchcombo);
 DEBUG(printf("SCB fl: idle_handler_id=%d @%p\n",searchcombo->idle_handler_id,searchcombo));
-   }  
+   }
    else
    {  if (gtksearchcombo_close_search(searchcombo,&children_present)) return;
    }
@@ -726,13 +726,13 @@ DEBUG(printf("SCB fl: idle_handler_id=%d @%p\n",searchcombo->idle_handler_id,sea
 
 /** (re)display the list (if applicable) */
 static gint
-gtk_searchcombo_entry_focus_in (GtkEntry      *entry, 
-                                               GdkEventFocus *event, 
+gtk_searchcombo_entry_focus_in (GtkEntry      *entry,
+                                               GdkEventFocus *event,
                                                GtkSearchCombo      *searchcombo)
 {  g_return_val_if_fail (searchcombo != NULL, FALSE);
    g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo), FALSE);
    DEBUG(printf("gtk_searchcombo_entry_focus_in\n"));
-   
+
    // do not pop up if value selected and no change happened
    DEBUG(printf("SCB efi: value_selected %d\n",searchcombo->value_selected));
    if (searchcombo->value_selected)
@@ -746,8 +746,8 @@ gtk_searchcombo_entry_focus_in (GtkEntry      *entry,
          searchcombo->search_finished,GTK_ENTRY(searchcombo->entry)->text_length,
          searchcombo->always_fill));
    if (searchcombo->search_in_progress || searchcombo->search_finished)
-      gtk_searchcombo_popup_list(searchcombo); 
-   else if (GTK_ENTRY(searchcombo->entry)->text_length 
+      gtk_searchcombo_popup_list(searchcombo);
+   else if (GTK_ENTRY(searchcombo->entry)->text_length
    	        || searchcombo->always_fill)
       gtk_searchcombo_fill_list(searchcombo);
    return FALSE;
@@ -755,7 +755,7 @@ gtk_searchcombo_entry_focus_in (GtkEntry      *entry,
 
 /** restart filling the list */
 static void
-gtk_searchcombo_entry_changed     (GtkEntry      *entry, 
+gtk_searchcombo_entry_changed     (GtkEntry      *entry,
                                                GtkSearchCombo      *searchcombo)
 {  g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
@@ -797,15 +797,15 @@ gtk_searchcombo_entry_changed     (GtkEntry      *entry,
              DEBUG(printf("narrow add %s\n", ltext));
           }
         }
-      
+
       {  GtkContainer *viewp=GTK_CONTAINER(GTK_BIN(searchcombo->popup)->child);
          gtk_container_remove(viewp,searchcombo->list);
          gtk_container_add(viewp,list);
          searchcombo->list=list;
       }
-      
-      // success  
-      if (GTK_LIST (list)->children) 
+
+      // success
+      if (GTK_LIST (list)->children)
       {  DEBUG(printf("narrow success: %d children\n",g_list_length(
       			gtk_container_children(GTK_CONTAINER(searchcombo->list)))));
          if (searchcombo->autoexpand)
@@ -819,16 +819,16 @@ gtk_searchcombo_entry_changed     (GtkEntry      *entry,
          return;
       }
    }
-   else 
+   else
    {  DEBUG(printf("!narrow: %d %d %d %d\n",searchcombo->backspace,
-   	 searchcombo->auto_narrow, searchcombo->search_finished, 
+   	 searchcombo->auto_narrow, searchcombo->search_finished,
    	 GTK_ENTRY(searchcombo->entry)->text_length));
    }
    gtk_searchcombo_fill_list(searchcombo);
 }
 
 /** hide or show the popwindow */
-static gint 
+static gint
 gtk_searchcombo_button_click(GtkButton *button, GtkSearchCombo *searchcombo)
 {  g_return_val_if_fail (searchcombo != NULL, FALSE);
    g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo), FALSE);
@@ -838,11 +838,11 @@ gtk_searchcombo_button_click(GtkButton *button, GtkSearchCombo *searchcombo)
       /* is this correct ? CP 2001-9-27, it's new */
       gtk_searchcombo_stop_if_running(searchcombo);
    }
-   else 
+   else
    {  if ((!searchcombo->search_in_progress && !searchcombo->search_finished)
    		|| searchcombo->value_selected)
          gtk_searchcombo_fill_list(searchcombo);
-      else 
+      else
          gtk_searchcombo_popup_list(searchcombo);
       searchcombo->value_selected=FALSE;
 DEBUG(printf("SCB bc: value_selected=%d\n",searchcombo->value_selected));
@@ -853,14 +853,14 @@ DEBUG(printf("SCB bc: value_selected=%d\n",searchcombo->value_selected));
 
 /** emit 'activate' on selection */
 static void
-gtk_searchcombo_new_selection (GtkList       *list, 
+gtk_searchcombo_new_selection (GtkList       *list,
                                                GtkSearchCombo      *searchcombo)
 {  GtkListItem *li=NULL;
    GtkLabel *label=NULL;
    g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
    DEBUG(printf("gtk_searchcombo_new_selection\n"));
-   if (!GTK_LIST(searchcombo->list)->selection) 
+   if (!GTK_LIST(searchcombo->list)->selection)
    { DEBUG(printf("SCB ns: nothing selected\n"));
      return;
    }
@@ -870,7 +870,7 @@ gtk_searchcombo_new_selection (GtkList       *list,
    g_assert(label != NULL);
    g_assert(GTK_IS_LABEL(label));
    // done in activate but perhaps a good idea to do it earlier
-   gtk_searchcombo_stop_if_running(searchcombo); 
+   gtk_searchcombo_stop_if_running(searchcombo);
    gtk_signal_handler_block (GTK_OBJECT (searchcombo->entry), searchcombo->entry_change_id);
    gtk_entry_set_text(GTK_ENTRY (searchcombo->entry), label->label);
    gtk_signal_handler_unblock (GTK_OBJECT (searchcombo->entry), searchcombo->entry_change_id);
@@ -915,7 +915,7 @@ void gtk_searchcombo_add_item(GtkSearchCombo      *searchcombo, const gchar *tex
    g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
    g_return_if_fail (text != NULL);
-   
+
    li = gtk_list_item_new_with_label (text);
    gtk_widget_show (li);
    gtk_container_add (GTK_CONTAINER (searchcombo->list), li);
@@ -934,7 +934,7 @@ void gtk_searchcombo_add_item(GtkSearchCombo      *searchcombo, const gchar *tex
 
 static void
 gtk_searchcombo_stop_if_running	(GtkSearchCombo *searchcombo)
-{  
+{
    g_return_if_fail (searchcombo != NULL);
    g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
    if (searchcombo->idle_handler_id!=-1 || searchcombo->search_in_progress)
@@ -952,7 +952,7 @@ DEBUG(printf("SCB sir: idle_handler_id=%d @%p as %d\n",
    }
 }
 
-void	
+void
 gtk_searchcombo_reset	(GtkSearchCombo *searchcombo)
 {
    g_return_if_fail (searchcombo != NULL);
@@ -971,9 +971,9 @@ static gint gtk_searchcombo_complete(GtkSearchCombo *searchcombo)
     gchar* prefix;
     gchar* nprefix = NULL;
     gint pos;
-    
+
     if ( !GTK_LIST (searchcombo->list)->children ) return FALSE;
-    
+
     // looks like completion does not work on empty strings
     // complete if there's only one choice
     if (!GTK_ENTRY(searchcombo->entry)->text_length
@@ -987,9 +987,9 @@ static gint gtk_searchcombo_complete(GtkSearchCombo *searchcombo)
           return TRUE;
        }
     }
-    
+
     cmpl = g_completion_new ((GCompletionFunc)gtk_searchcombo_func);
-    if (!searchcombo->case_sensitive) 
+    if (!searchcombo->case_sensitive)
        g_completion_set_compare(cmpl, (GCompletionStrncmpFunc)g_strncasecmp);
     g_completion_add_items (cmpl, GTK_LIST (searchcombo->list)->children);
 
@@ -999,12 +999,12 @@ static gint gtk_searchcombo_complete(GtkSearchCombo *searchcombo)
 
     g_completion_complete(cmpl, prefix, &nprefix);
 
-    if (nprefix && strlen (nprefix) > strlen (prefix)) 
+    if (nprefix && strlen (nprefix) > strlen (prefix))
       { // sollte kein Neulesen erfordern ...
         gtk_signal_handler_block (GTK_OBJECT (searchcombo->entry), searchcombo->entry_change_id);
         gtk_editable_delete_text (GTK_EDITABLE (searchcombo->entry), 0, -1);
         pos=0;
-    	gtk_editable_insert_text (GTK_EDITABLE (searchcombo->entry), nprefix, 
+    	gtk_editable_insert_text (GTK_EDITABLE (searchcombo->entry), nprefix,
 				 strlen (nprefix), &pos);
         gtk_signal_handler_unblock (GTK_OBJECT (searchcombo->entry), searchcombo->entry_change_id);
         gtk_editable_set_position(GTK_EDITABLE (searchcombo->entry), pos);
@@ -1022,13 +1022,13 @@ gtk_searchcombo_entry_key_press (GtkEntry * entry, GdkEventKey * event, GtkSearc
 {
   searchcombo->backspace= (event->keyval == GDK_BackSpace);
   // if nothing else happens, at least start a search and display the window on BS
-  if (searchcombo->backspace && !searchcombo->always_fill 
+  if (searchcombo->backspace && !searchcombo->always_fill
       && !searchcombo->search_finished && !searchcombo->search_in_progress
       && !GTK_ENTRY(searchcombo->entry)->text_length)
     gtk_searchcombo_fill_list(searchcombo);
   /* completion */
-  if ((searchcombo->enable_tab || (event->state & GDK_MOD1_MASK)) && (event->keyval == GDK_Tab) ) 
-  { 
+  if ((searchcombo->enable_tab || (event->state & GDK_MOD1_MASK)) && (event->keyval == GDK_Tab) )
+  {
     if ( !GTK_LIST (searchcombo->list)->children ) return FALSE;
     gtk_signal_emit_stop_by_name (GTK_OBJECT (entry), "key_press_event");
     return gtk_searchcombo_complete(searchcombo);
@@ -1101,7 +1101,7 @@ gtk_searchcombo_set_start_on_idle (GtkSearchCombo * searchcombo, gboolean val)
 
 // deprecated, use gtk_widget_grab_focus instead
 void    gtk_searchcombo_grab_focus (GtkSearchCombo * searchcombo)
-{  
+{
   g_return_if_fail (searchcombo != NULL);
   g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
   gtk_widget_grab_focus(searchcombo->entry);
@@ -1125,7 +1125,7 @@ void	gtk_searchcombo_set_editable (GtkSearchCombo * searchcombo, gint val)
 }
 
 void	gtk_searchcombo_trigger_search (GtkSearchCombo * searchcombo)
-{  
+{
   g_return_if_fail (searchcombo != NULL);
   g_return_if_fail (GTK_IS_SEARCHCOMBO (searchcombo));
   gtk_searchcombo_fill_list(searchcombo);
@@ -1152,8 +1152,8 @@ gint	gtk_searchcombo_get_selected_index(const GtkSearchCombo * searchcombo)
 {
   g_return_val_if_fail (searchcombo != NULL,-1);
   g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo),-1);
-  
-  if (!GTK_LIST(searchcombo->list)->selection) 
+
+  if (!GTK_LIST(searchcombo->list)->selection)
   {  GtkListItem *li=gtk_searchcombo_find(searchcombo);
      if (!li) return -1;
      return g_list_index(GTK_LIST(searchcombo->list)->children, li);
@@ -1165,15 +1165,15 @@ guint gtk_searchcombo_get_size(const GtkSearchCombo * searchcombo)
 {
   g_return_val_if_fail (searchcombo != NULL,0);
   g_return_val_if_fail (GTK_IS_SEARCHCOMBO (searchcombo),0);
-  
-  return g_list_length(GTK_LIST(searchcombo->list)->children); 
+
+  return g_list_length(GTK_LIST(searchcombo->list)->children);
 }
 
 static void gtk_searchcombo_do_autoexpand(GtkSearchCombo *searchcombo)
 {
          GtkListItem *li=NULL;
          GtkLabel *label=NULL;
-         
+
          li=(GtkListItem*)(gtk_container_children(
          			GTK_CONTAINER(searchcombo->list))->data);
          g_assert(GTK_IS_LIST_ITEM(li));
@@ -1193,7 +1193,7 @@ gtk_searchcombo_set_property (GObject         *object,
 			GParamSpec      *pspec)
 {
   GtkSearchCombo *searchcombo = GTK_SEARCHCOMBO (object);
-  
+
   switch (prop_id)
     {
     case PROP_CASE_SENSITIVE:
@@ -1209,7 +1209,7 @@ gtk_searchcombo_set_property (GObject         *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
-  
+
 }
 
 static void
@@ -1219,7 +1219,7 @@ gtk_searchcombo_get_property (GObject         *object,
 			GParamSpec      *pspec)
 {
   GtkSearchCombo *searchcombo = GTK_SEARCHCOMBO (object);
-  
+
   switch (prop_id)
     {
     case PROP_CASE_SENSITIVE:
@@ -1247,7 +1247,7 @@ gtk_searchcombo_size_allocate (GtkWidget     *widget,
   g_return_if_fail (allocation != NULL);
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-  
+
   searchcombo = GTK_SEARCHCOMBO (widget);
 
   if (searchcombo->entry->allocation.height > searchcombo->entry->requisition.height)
@@ -1256,8 +1256,8 @@ gtk_searchcombo_size_allocate (GtkWidget     *widget,
 
       button_allocation = searchcombo->button->allocation;
       button_allocation.height = searchcombo->entry->requisition.height;
-      button_allocation.y = searchcombo->entry->allocation.y + 
-	(searchcombo->entry->allocation.height - searchcombo->entry->requisition.height) 
+      button_allocation.y = searchcombo->entry->allocation.y +
+	(searchcombo->entry->allocation.height - searchcombo->entry->requisition.height)
 	/ 2;
       gtk_widget_size_allocate (searchcombo->button, &button_allocation);
     }
