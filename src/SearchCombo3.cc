@@ -42,16 +42,17 @@ bool Gtk::SearchCombo3::match_selected(const Gtk::TreeModel::iterator&it)
   return true;
 }
 
-Gtk::SearchCombo3::SearchCombo3(bool _always_fill, bool _autoexpand)
+Gtk::SearchCombo3::SearchCombo3(bool _always_fill, bool _autoexpand, mycols *cols)
  : search_in_progress(), a(Gtk::ARROW_DOWN, Gtk::SHADOW_ETCHED_IN), ok_if_empty(), value_in_list(),
    always_fill(_always_fill), autoexpand(_autoexpand), autoexpand_on_activate(), auto_narrow(),
    do_restart(true)
 {
+  if (!cols) cols=&mc;
   ec= Gtk::EntryCompletion::create();
   e.set_completion(ec);
   ec->set_minimum_key_length(0);
   ec->set_match_func(sigc::ptr_fun(&match));
-  completion_model = Gtk::ListStore::create(mc);
+  completion_model = Gtk::ListStore::create(*cols);
   ec->set_model(completion_model);
   ec->set_text_column(0);
   add(e);

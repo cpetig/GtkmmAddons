@@ -38,6 +38,7 @@ namespace Gtk
 {
 class SearchCombo3 : public Gtk::HBox
 {
+protected:
   struct mycols : public Gtk::TreeModelColumnRecord
   {
     Gtk::TreeModelColumn<Glib::ustring> text;
@@ -46,6 +47,7 @@ class SearchCombo3 : public Gtk::HBox
     { add (text);  }
   };
 
+private:
 //  enum internal_state { is_silent, is_open, is_done };
   bool search_in_progress;
 
@@ -75,9 +77,9 @@ class SearchCombo3 : public Gtk::HBox
 //  void on_changed();
   sigc::signal<void> sig_activate;
   sigc::signal<void,gboolean *,GtkSCContext> sig_search;
-  bool match_selected(const Gtk::TreeModel::iterator&);
+  virtual bool match_selected(const Gtk::TreeModel::iterator&);
 public:
-  explicit SearchCombo3(bool always_fill=false, bool autoexpand=false);
+  explicit SearchCombo3(bool always_fill=false, bool autoexpand=false, mycols *cols=NULL);
   ~SearchCombo3();
 
   sigc::signal0<void> &signal_activate() { return sig_activate; }
