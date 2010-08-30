@@ -23,7 +23,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/window.h>
-#include <SearchCombo2.h>
+#include <SearchCombo3.h>
 #include <unistd.h>
 #include <iostream>
 #include <string.h>
@@ -98,7 +98,7 @@ const int namenum=sizeof(names)/sizeof(names[0]);
 class comboArtikel : public sigc::trackable
 {
         int nextval;
-        Gtk::SearchCombo2 *sc;
+        Gtk::SearchCombo3 *sc;
     public:
         void suchfunc(gboolean *cont, GtkSCContext newsearch)
         {   int added=0;
@@ -123,7 +123,7 @@ class comboArtikel : public sigc::trackable
         {
             std::cerr << "activate: "<<sc->get_text()<<"\n";
         }
-        comboArtikel(Gtk::SearchCombo2 *s) : nextval(0), sc(s)
+        comboArtikel(Gtk::SearchCombo3 *s) : nextval(0), sc(s)
     {}
 };
 
@@ -131,7 +131,7 @@ class comboArtikel : public sigc::trackable
 class testwindow : public Gtk::Window
 {
         Gtk::VBox vbox;
-        Gtk::SearchCombo2 scombo,scombo2,scombo3;
+        Gtk::SearchCombo3 scombo,scombo2,scombo3;
         comboArtikel comboart,comboart2,comboart3;
         Gtk::Entry entry;
 
