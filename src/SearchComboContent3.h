@@ -57,14 +57,14 @@ private:
 };
 
 template<class T>
-bool match_selected(const Gtk::TreeModel::iterator& it)
+bool SearchComboContent3<T>::match_selected(const Gtk::TreeModel::iterator& it)
 {
   current_content=(*it)[cols.content];
   return Gtk::SearchCombo3::match_selected(it);
 }
 
 template<class T>
-void SearchComboContent<T>::setContent(const std::string &text, const T &item)
+void SearchComboContent3<T>::setContent(const std::string &text, const T &item)
 {
  reset();
  Gtk::SearchCombo3::set_text(text);
@@ -75,7 +75,7 @@ void SearchComboContent<T>::setContent(const std::string &text, const T &item)
 
 
 template<class T>
-void SearchComboContent<T>::add_item(const std::string &text, const T &item)
+void SearchComboContent3<T>::add_item(const std::string &text, const T &item)
 {
  if(size()==0) current_content=T();
  Gtk::TreeIter it= Gtk::SearchCombo3::add_item(text);
@@ -84,13 +84,13 @@ void SearchComboContent<T>::add_item(const std::string &text, const T &item)
 
 
 template<class T>
-const T &SearchComboContent<T>::Content() const
+const T &SearchComboContent3<T>::Content() const
 {
-  return current_content[i];
+  return current_content;
 }
 
 template<class T>
-void SearchComboContent<T>::reset()
+void SearchComboContent3<T>::reset()
 { current_content=T();
   Gtk::SearchCombo3::reset();
 }
