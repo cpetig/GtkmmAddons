@@ -86,3 +86,10 @@ void Gtk::SearchCombo3::on_entry_changed()
   }
   sig_search(&cont, GTK_SEARCH_CLOSE);
 }
+
+void Gtk::SearchCombo3::set_autoexpand(bool b) { autoexpand=b; }
+guint Gtk::SearchCombo3::get_size() const { return completion_model->children().size(); }
+void Gtk::SearchCombo3::set_text(Glib::ustring const& t) { e.set_text(t); }
+void Gtk::SearchCombo3::reset() { e.set_text(Glib::ustring()); do_restart=true; }
+void Gtk::SearchCombo3::set_start_on_idle(bool) { }
+void Gtk::SearchCombo3::set_value_in_list(bool, bool) { }
