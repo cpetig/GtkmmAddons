@@ -50,11 +50,14 @@ struct ContentError : public std::exception
 
 private:
  T current_content;
- cols_t cols;
+ static cols_t cols;
 
  void set_text(const std::string &text);
  virtual bool match_selected(const Gtk::TreeModel::iterator&);
 };
+
+template<class T>
+typename SearchComboContent3<T>::cols_t SearchComboContent3<T>::cols;
 
 template<class T>
 bool SearchComboContent3<T>::match_selected(const Gtk::TreeModel::iterator& it)
