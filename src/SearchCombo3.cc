@@ -55,11 +55,11 @@ Gtk::SearchCombo3::SearchCombo3(bool _always_fill, bool _autoexpand, mycols *col
   completion_model = Gtk::ListStore::create(*cols);
   ec->set_model(completion_model);
   ec->set_text_column(0);
-  add(e);
+  pack_start(e);
   e.show();
   b.add(a);
   a.show();
-  add(b);
+  pack_start(b, Gtk::PackOptions(0));
   b.show();
   show();
   e.signal_changed().connect(sigc::mem_fun(*this,&SearchCombo3::on_entry_changed),false);
