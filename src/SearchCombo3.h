@@ -77,6 +77,7 @@ private:
 //  void on_changed();
   sigc::signal<void> sig_activate;
   sigc::signal<void,gboolean *,GtkSCContext> sig_search;
+protected:
   virtual bool match_selected(const Gtk::TreeModel::iterator&);
 public:
   explicit SearchCombo3(bool always_fill=false, bool autoexpand=false, mycols *cols=NULL);
@@ -137,5 +138,7 @@ public:
     bool empty() const {  return !get_size(); }
     guint size() const {  return get_size(); }
 
+  Gtk::Entry* get_entry() { return &e; }
+  const Gtk::Entry* get_entry() const { return &e; }
 };
 }
