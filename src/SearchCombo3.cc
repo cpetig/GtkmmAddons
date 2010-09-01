@@ -43,9 +43,9 @@ bool Gtk::SearchCombo3::match_selected(const Gtk::TreeModel::iterator&it)
 }
 
 Gtk::SearchCombo3::SearchCombo3(bool _always_fill, bool _autoexpand, mycols *cols)
- : search_in_progress(), a(Gtk::ARROW_DOWN, Gtk::SHADOW_ETCHED_IN), ok_if_empty(), value_in_list(),
+ : a(Gtk::ARROW_DOWN, Gtk::SHADOW_ETCHED_IN), ok_if_empty(), value_in_list(),
    always_fill(_always_fill), autoexpand(_autoexpand), autoexpand_on_activate(), auto_narrow(),
-   do_restart(true)
+   search_in_progress(), do_restart(true), block_change()
 {
   if (!cols) cols=&mc;
   ec= Gtk::EntryCompletion::create();
@@ -75,6 +75,7 @@ void Gtk::SearchCombo3::stop_search()
 
 void Gtk::SearchCombo3::on_entry_changed()
 {
+  if (block_change) return;
   stop_search();
   completion_model->clear();
   gboolean cont=false;
@@ -89,7 +90,7 @@ void Gtk::SearchCombo3::on_entry_changed()
 
 void Gtk::SearchCombo3::set_autoexpand(bool b) { autoexpand=b; }
 guint Gtk::SearchCombo3::get_size() const { return completion_model->children().size(); }
-void Gtk::SearchCombo3::set_text(Glib::ustring const& t) { e.set_text(t); }
-void Gtk::SearchCombo3::reset() { e.set_text(Glib::ustring()); do_restart=true; }
+void Gtk::SearchCombo3::set_text(Glib::ustring const& t) { block_change=true; e.set_text(t); block_change=false; }
+void Gtk::SearchCombo3::reset() { do_restart=true; e.set_text(Glib::ustring()); }
 void Gtk::SearchCombo3::set_start_on_idle(bool) { }
 void Gtk::SearchCombo3::set_value_in_list(bool, bool) { }

@@ -49,7 +49,6 @@ protected:
 
 private:
 //  enum internal_state { is_silent, is_open, is_done };
-  bool search_in_progress;
 
   Gtk::Entry e;
   Gtk::Button b;
@@ -67,7 +66,9 @@ private:
 	bool autoexpand_on_activate:1; /** whether to expand on pressing Return */
 	bool auto_narrow:1;  /** do not call search on key press but
 				instread try to shrink displayed list ourselves */
-  bool do_restart;
+  bool search_in_progress:1;
+  bool do_restart:1;
+  bool block_change:1;
 
   bool on_idle();
   void on_entry_changed();
