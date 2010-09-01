@@ -69,10 +69,10 @@ bool SearchComboContent3<T>::match_selected(const Gtk::TreeModel::iterator& it)
 template<class T>
 void SearchComboContent3<T>::setContent(const std::string &text, const T &item)
 {
- reset();
+// reset();  // why this?
  Gtk::SearchCombo3::set_text(text);
- Gtk::TreeIter it= Gtk::SearchCombo3::add_item(text);
- (*it)[cols.content]=item;
+// Gtk::TreeIter it= Gtk::SearchCombo3::add_item(text);
+// (*it)[cols.content]=item;
  current_content=item;
 }
 
