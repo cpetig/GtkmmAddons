@@ -35,8 +35,10 @@ void Gtk::SearchCombo3::popupdown()
 bool Gtk::SearchCombo3::match_selected(const Gtk::TreeModel::iterator&it)
 {
   // default handling:
+  block_change=true;
   e.set_text((*it)[mc.text]);
   e.set_position(-1);
+  block_change=false;
   do_restart=true;
   sig_activate();
   return true;

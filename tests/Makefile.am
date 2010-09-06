@@ -6,13 +6,16 @@ AM_CXXFLAGS=-I$(top_srcdir)/searchcombo/src -I$(top_srcdir)/src
 
 EXTRA_PROGRAMS = nsc_test sccont_test optionmenu db_test back_test \
 	callbackbuf wfr_test treeview treeview_tree ComboBoxMapping \
-	ec_test
+	ec_test sccont3_test
 
 back_test_SOURCES = back_test.cc db_embed.cc
 back_test_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
 
 sccont_test_SOURCES = sccont_test.cc
 sccont_test_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
+
+sccont3_test_SOURCES = sccont3_test.cc
+sccont3_test_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
 
 nsc_test_SOURCES = nsc_test.cc
 nsc_test_LDADD = $(top_srcdir)/src/libGtkmmAddons.a @GTKMM_LIBS@
