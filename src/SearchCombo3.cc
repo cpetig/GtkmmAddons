@@ -65,6 +65,7 @@ Gtk::SearchCombo3::SearchCombo3(bool _always_fill, bool _autoexpand, mycols *col
   b.show();
   show();
   e.signal_changed().connect(sigc::mem_fun(*this,&SearchCombo3::on_entry_changed),false);
+  e.signal_activate().connect(sigc::mem_fun(*this,&SearchCombo3::on_entry_activate),false);
   b.signal_clicked().connect(sigc::mem_fun(*this,&SearchCombo3::popupdown));
   ec->signal_match_selected().connect(sigc::mem_fun(*this,&SearchCombo3::match_selected),false);
   if (always_fill) g_signal_emit_by_name(e.gobj(), "changed");
@@ -96,3 +97,11 @@ void Gtk::SearchCombo3::set_text(Glib::ustring const& t) { block_change=true; e.
 void Gtk::SearchCombo3::reset() { do_restart=true; e.set_text(Glib::ustring()); }
 void Gtk::SearchCombo3::set_start_on_idle(bool) { }
 void Gtk::SearchCombo3::set_value_in_list(bool, bool) { }
+
+void Gtk::SearchCombo3::on_entry_activate()
+{
+  if (completion_model->children().size()==1)
+  {
+    match_selected(completion_model->children().begin());
+  }
+}

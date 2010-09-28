@@ -72,6 +72,7 @@ private:
 
   bool on_idle();
   void on_entry_changed();
+  void on_entry_activate();
   void popupdown();
   void init();
   void stop_search();
