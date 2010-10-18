@@ -128,8 +128,11 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    }
 
    bool res=false;
+   char currentwd[MAX_PATH];
+   getcwd(currentwd,sizeof(currentwd));
    if (load) res=GetOpenFileName(&ofn);
    else res=GetSaveFileName(&ofn);
+   chdir(currentwd); // work around the fact that GetOpenFileName changes working dir
 
    if (res)
    { std::string result=buf;
