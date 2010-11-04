@@ -29,7 +29,11 @@ void Gtk::SearchCombo3::popupdown()
 //  if (e.get_child_visible())
   do_restart= true;
   e.grab_focus();
+// trick around the fact that we need to open it by faking a key press but with different search mode
+  block_change=true;
   g_signal_emit_by_name(e.gobj(), "changed");
+  block_change=false;
+  start_search();
 }
 
 bool Gtk::SearchCombo3::match_selected(const Gtk::TreeModel::iterator&it)
@@ -76,9 +80,8 @@ void Gtk::SearchCombo3::stop_search()
 
 }
 
-void Gtk::SearchCombo3::on_entry_changed()
+void Gtk::SearchCombo3::start_search()
 {
-  if (block_change) return;
   stop_search();
   completion_model->clear();
   gboolean cont=false;
@@ -89,6 +92,13 @@ void Gtk::SearchCombo3::on_entry_changed()
     sig_search(&cont, GTK_SEARCH_FETCH);
   }
   sig_search(&cont, GTK_SEARCH_CLOSE);
+}
+
+void Gtk::SearchCombo3::on_entry_changed()
+{
+  if (block_change) return;
+  do_restart=false;
+  start_search();
 }
 
 void Gtk::SearchCombo3::set_autoexpand(bool b) { autoexpand=b; }
@@ -103,5 +113,9 @@ void Gtk::SearchCombo3::on_entry_activate()
   if (completion_model->children().size()==1)
   {
     match_selected(completion_model->children().begin());
+  }
+  else
+  {
+    for (Gtk::TreeModel::iterator i=completion_model->children().begin(); i!=completion_model->children
   }
 }

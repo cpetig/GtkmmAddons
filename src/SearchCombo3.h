@@ -76,6 +76,7 @@ private:
   void popupdown();
   void init();
   void stop_search();
+  void start_search();
 //  void on_changed();
   sigc::signal<void> sig_activate;
   sigc::signal<void,gboolean *,GtkSCContext> sig_search;
