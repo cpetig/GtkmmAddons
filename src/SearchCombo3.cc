@@ -116,6 +116,12 @@ void Gtk::SearchCombo3::on_entry_activate()
   }
   else
   {
-    for (Gtk::TreeModel::iterator i=completion_model->children().begin(); i!=completion_model->children
+    Glib::ustring text= e.get_text();
+    for (Gtk::TreeModel::iterator i=completion_model->children().begin(); i!=completion_model->children().end(); ++i)
+      if ((*i)[mc.text]==text)
+      {
+	match_selected(i);
+	break;
+      }
   }
 }
