@@ -72,7 +72,7 @@ bool SearchComboContent3<T>::SetMatch(T const& v)
 {
   for (const_iterator i=begin();i!=end();++i)
     if ((*i)[cols.content]==v)
-      return Gtk::SearchCombo3::match_selected(it);
+      return Gtk::SearchCombo3::match_selected(i);
   return false;
 }
 
