@@ -70,9 +70,11 @@ bool SearchComboContent3<T>::match_selected(const Gtk::TreeModel::iterator& it)
 template<class T>
 bool SearchComboContent3<T>::SetMatch(T const& v)
 {
+  if (begin()==end())
+    start_search();
   for (const_iterator i=begin();i!=end();++i)
     if ((*i)[cols.content]==v)
-      return Gtk::SearchCombo3::match_selected(i);
+      return match_selected(i);
   return false;
 }
 

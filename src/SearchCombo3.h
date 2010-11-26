@@ -76,12 +76,12 @@ private:
   void popupdown();
   void init();
   void stop_search();
-  void start_search();
 //  void on_changed();
   sigc::signal<void> sig_activate;
   sigc::signal<void,gboolean *,GtkSCContext> sig_search;
 protected:
   virtual bool match_selected(const Gtk::TreeModel::iterator&);
+  void start_search();
 public:
   explicit SearchCombo3(bool always_fill=false, bool autoexpand=false, mycols *cols=NULL);
   ~SearchCombo3();
