@@ -125,3 +125,6 @@ void Gtk::SearchCombo3::on_entry_activate()
       }
   }
 }
+
+Gtk::ListStore::const_iterator Gtk::SearchCombo3::begin() const { return completion_model->children().begin(); }
+Gtk::ListStore::const_iterator Gtk::SearchCombo3::end() const { return completion_model->children().end(); }

@@ -143,5 +143,9 @@ public:
 
   Gtk::Entry* get_entry() { return &e; }
   const Gtk::Entry* get_entry() const { return &e; }
+
+  typedef Gtk::ListStore::const_iterator const_iterator;
+  const_iterator begin() const;
+  const_iterator end() const;
 };
 }

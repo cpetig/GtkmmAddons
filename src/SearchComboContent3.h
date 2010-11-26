@@ -46,7 +46,8 @@ struct ContentError : public std::exception
  const T &Content() const;
  const T &get_value()const {return Content();}
  void setContent(const std::string &text, const T &c);
- void set_value(const std::string &text, const T &c){setContent(text,c);};
+ void set_value(const std::string &text, const T &c){ setContent(text,c); }
+ bool SetMatch(const T &c);
 
 private:
  T current_content;
@@ -64,6 +65,15 @@ bool SearchComboContent3<T>::match_selected(const Gtk::TreeModel::iterator& it)
 {
   current_content=(*it)[cols.content];
   return Gtk::SearchCombo3::match_selected(it);
+}
+
+template<class T>
+bool SearchComboContent3<T>::SetMatch(T const& v)
+{
+  for (const_iterator i=begin();i!=end();++i)
+    if ((*i)[cols.content]==v)
+      return Gtk::SearchCombo3::match_selected(it);
+  return false;
 }
 
 template<class T>
