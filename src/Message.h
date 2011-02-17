@@ -28,7 +28,7 @@
 #include <string>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwidget.h>
-#include <sigc++/compatibility.h>
+//#include <sigc++/compatibility.h>
 
 class Message : public Gtk::Dialog
 {
@@ -47,7 +47,7 @@ class Message : public Gtk::Dialog
             message.show();
             hbox.show();
 
-            okbutton.signal_clicked().connect(SigC::slot(*this,&Message::Hide));
+            okbutton.signal_clicked().connect(sigc::mem_fun(*this,&Message::Hide));
         }
 
         void Show( const std::string &m )

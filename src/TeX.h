@@ -18,7 +18,7 @@
 
 // $Id: TeX.h,v 1.8 2005/07/21 08:58:11 christof Exp $
 
-#include <iostream>
+#include <iosfwd>
 #include <string>
 #include <glib.h>
 

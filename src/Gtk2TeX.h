@@ -19,7 +19,7 @@
 // $Id: Gtk2TeX.h,v 1.12 2005/09/12 11:04:56 christof Exp $
 
 #include <TeX.h>
-#include <iostream>
+#include <iosfwd>
 #include <gtkmm/treeview.h>
 
 namespace Gtk2TeX
