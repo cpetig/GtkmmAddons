@@ -19,6 +19,7 @@
 */
 
 #include "Gtk_OStream.h"
+//#include <cassert>
 
 std::streamsize Gtk::OStreamBase::data_cb(const char_type* s, std::streamsize n)
 {  if (data_impl) 

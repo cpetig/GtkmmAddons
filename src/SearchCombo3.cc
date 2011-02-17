@@ -1,5 +1,5 @@
 #include "SearchCombo3.h"
-#include <cassert>
+//#include <cassert>
 #include <gtkmm/liststore.h>
 
 static bool match(const Glib::ustring& s, const Gtk::TreeIter& iter)
