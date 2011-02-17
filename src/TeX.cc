@@ -21,6 +21,7 @@
 #include <config.h>
 #include <TeX.h>
 #include <cassert>
+#include <iostream>
 
 std::ostream &TeX::Header(std::ostream &os, HeaderFlags fl)
 {  // adjust default values

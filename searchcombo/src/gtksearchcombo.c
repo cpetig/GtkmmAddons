@@ -22,23 +22,23 @@
 #include <string.h>
 
 #include <gtk/gtkarrow.h>
-#include <gtk/gtklabel.h>
+//#include <gtk/gtklabel.h>
 #include <gtk/gtklist.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkeditable.h>
-#include <gtk/gtkeventbox.h>
+//#include <gtk/gtkeventbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtklistitem.h>
+//#include <gtk/gtklistitem.h>
 #include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtkmain.h>
+//#include <gtk/gtkmain.h>
 #include <gtk/gtksignal.h>
-#include <gtk/gtkwindow.h>
+//#include <gtk/gtkwindow.h>
 #include <gdk/gdkkeysyms.h>
 #include "gtksearchcombo.h"
-#include <gtk/gtkframe.h>
+//#include <gtk/gtkframe.h>
 #include <gtk/gtkwidget.h>
 
-#include <gtk/gtkversion.h>
+//#include <gtk/gtkversion.h>
 
 #if 0
 #define DEBUG(x) x

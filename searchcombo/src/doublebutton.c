@@ -20,7 +20,7 @@
  */
 
 #include <doublebutton.h>
-#include <stdio.h>
+//#include <stdio.h>
 
 enum { SECONDPRESSED, LAST_SIGNAL };
 

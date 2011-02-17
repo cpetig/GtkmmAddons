@@ -18,7 +18,7 @@
  */
 
 #include <config.h>
-#include "gtkcombobox.h"
+#include "gtknbcombobox.h"
 
 #include "gtkarrow.h"
 #include "gtkbindings.h"

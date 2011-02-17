@@ -18,7 +18,7 @@
  */
 
 #include <config.h>
-#include "gtkcomboboxentry.h"
+#include "gtknbcomboboxentry.h"
 #include "gtkcelllayout.h"
 
 #include "gtkentry.h"
