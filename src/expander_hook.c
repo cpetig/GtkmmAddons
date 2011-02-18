@@ -1,6 +1,6 @@
 #include <gtk/gtkexpander.h>
 #include <gtk/gtkhpaned.h>
-//#include <gtk/gtkbox.h>
+#include <gtk/gtkbox.h>
 
 static void 
 expander_callback(GObject    *object,
