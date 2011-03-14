@@ -14,6 +14,7 @@
 # include <objidl.h> // IMalloc
 # include <shlobj.h>
 #include <gdk/gdkwin32.h>
+#include <Misc/i18n.h>
 
 class TagStream { public: static void utf82iso(std::string &s); };
 //extern std::string utf82iso(const std::string &s);
@@ -51,6 +52,24 @@ namespace SigC
 #include "WinFileReq_glade.cc"
 #endif
 
+#ifdef WIN32
+static std::wstring make_wstring(std::string const& x)
+{
+  wchar_t wstring[10240];
+  size_t r= mbstowcs(wstring,x.c_str(),sizeof(wstring)/sizeof(wchar_t));
+  if (r==(size_t)(-1)) return std::wstring();
+  return wstring;
+}
+
+static std::string un_wstring(std::wstring const& x)
+{
+  char nstring[10240];
+  size_t r= wcstombs(nstring,x.c_str(),sizeof(nstring)/sizeof(char));
+  if (r==(size_t)(-1)) return std::string();
+  return nstring;
+}
+#endif
+
 WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
                 std::string file, std::string filter,
                 std::string extension, std::string title, bool load,
@@ -64,32 +83,38 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    set_title(title);
    if (parent) set_transient_for(*parent);
 #else
+   std::string patsep(1,char(0));
+   if (filter.empty() && !extension.empty() && !title.empty())
+   {  filter=title+" (*."+extension+")"+patsep+"*."+extension+patsep+
+           _("All Files (*.*)")+patsep+"*.*"+patsep;
+   }
+   if (filter.empty()) filter = _("All Files (*.*)")+patsep+"*.*"+patsep;
    // file is assumed to have UTF-8 encoding
-   TagStream::utf82iso(file);
-   TagStream::utf82iso(title);
+   std::wstring wfile=make_wstring(file);
+   std::wstring wtitle=make_wstring(title);
 
-   TagStream::utf82iso(filter);
-   TagStream::utf82iso(extension);
+   std::wstring wfilter=make_wstring(filter);
+   std::wstring wextension=make_wstring(extension);
 
-   char buf[MAX_PATH];
-   strncpy(buf,file.c_str(),sizeof buf);
+   wchar_t buf[MAX_PATH];
+   wcsncpy(buf,wfile.c_str(),sizeof(buf)/sizeof(wchar_t));
 
-   if (filter.empty() && extension.empty())
+   if (wfilter.empty() && wextension.empty())
    // browse for a directory
-   { BROWSEINFO bi;
-     ZeroMemory(&bi, sizeof(BROWSEINFO));
+   { BROWSEINFOW bi;
+     ZeroMemory(&bi, sizeof(BROWSEINFOW));
      bi.hwndOwner = (HWND)GDK_WINDOW_HWND(parent->get_window()->gobj());
      bi.pszDisplayName = buf;
-     bi.lpszTitle = title.c_str();
+     bi.lpszTitle = wtitle.c_str();
      bi.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
 
-     LPITEMIDLIST pidl=SHBrowseForFolder(&bi);
+     LPITEMIDLIST pidl=SHBrowseForFolderW(&bi);
      if (pidl)
      { // get the name of the folder
-       if ( SHGetPathFromIDList ( pidl, buf ) )
-       { std::string result=buf;
-         TagStream::utf82iso(result);
-         const_cast<sigc::slot<void,const std::string &>&>(sl)(result);
+       if ( SHGetPathFromIDListW ( pidl, buf ) )
+       { std::wstring wresult=buf;
+         //TagStream::utf82iso(result);
+         const_cast<sigc::slot<void,const std::string &>&>(sl)(un_wstring(wresult));
        }
         // free memory used
         IMalloc * imalloc = 0;
@@ -104,40 +129,35 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
      return;
    }
 
-   OPENFILENAME ofn;
+   OPENFILENAMEW ofn;
 
-   ZeroMemory(&ofn, sizeof (OPENFILENAME));
-   ofn.lStructSize = sizeof (OPENFILENAME);
+   ZeroMemory(&ofn, sizeof (OPENFILENAMEW));
+   ofn.lStructSize = sizeof (OPENFILENAMEW);
    if (parent) ofn.hwndOwner = (HWND)GDK_WINDOW_HWND(parent->get_window()->gobj());
    ofn.lpstrFile = buf;
-   ofn.nMaxFile = sizeof buf;
-   if (filter.empty() && !extension.empty() && !title.empty())
-   {  filter=title+" (*."+extension+")\0*."+extension+"\0"
-           "Alle Dateien (*.*)\0*.*\0";
-   }
-   if (filter.empty()) ofn.lpstrFilter = "Alle Dateien (*.*)\0*.*\0";
-   else ofn.lpstrFilter=filter.c_str();
+   ofn.nMaxFile = sizeof buf/sizeof(wchar_t);
+   ofn.lpstrFilter=wfilter.c_str();
    ofn.nFilterIndex = 1;
-   ofn.lpstrDefExt= extension.c_str();
-   ofn.lpstrTitle = title.c_str();
+   ofn.lpstrDefExt= wextension.c_str();
+   ofn.lpstrTitle = wtitle.c_str();
    ofn.Flags = OFN_PATHMUSTEXIST
-   		| (load ? OFN_FILEMUSTEXIST : 0);
-   if (!file.empty() && file[file.size()-1]=='\\')
+               | (load ? OFN_FILEMUSTEXIST : 0);
+   if (!wfile.empty() && wfile[wfile.size()-1]=='\\')
    {  *buf=0;
-      ofn.lpstrInitialDir = file.c_str();
+      ofn.lpstrInitialDir = wfile.c_str();
    }
 
    bool res=false;
    char currentwd[MAX_PATH];
    getcwd(currentwd,sizeof(currentwd));
-   if (load) res=GetOpenFileName(&ofn);
-   else res=GetSaveFileName(&ofn);
+   if (load) res=GetOpenFileNameW(&ofn);
+   else res=GetSaveFileNameW(&ofn);
    chdir(currentwd); // work around the fact that GetOpenFileName changes working dir
 
    if (res)
-   { std::string result=buf;
-     TagStream::utf82iso(result);
-     const_cast<sigc::slot<void,const std::string &>&>(sl)(result);
+   { //std::string result=buf;
+     //TagStream::utf82iso(result);
+     const_cast<sigc::slot<void,const std::string &>&>(sl)(un_wstring(buf));
    }
    else if (pass_cancel)
       const_cast<sigc::slot<void,const std::string &>&>(sl)(std::string());
