@@ -14,6 +14,7 @@
 # include <objidl.h> // IMalloc
 # include <shlobj.h>
 #include <gdk/gdkwin32.h>
+#include <assert.h>
 //#include <Misc/i18n.h> // dependency not easily added, prefer glib_gettext?
 #define _(X) (X)
 
@@ -57,16 +58,18 @@ namespace SigC
 static std::wstring make_wstring(std::string const& x)
 {
   wchar_t wstring[10240];
-  size_t r= mbstowcs(wstring,x.c_str(),sizeof(wstring)/sizeof(wchar_t));
-  if (r==(size_t)(-1)) return std::wstring();
+  assert(MultiByteToWideChar(CP_UTF8, 0, x.c_str(), -1, wstring, sizeof(wstring)/sizeof(wchar_t))!=0);
+//  size_t r= mbstowcs(wstring,x.c_str(),sizeof(wstring)/sizeof(wchar_t));
+//  if (r==(size_t)(-1)) return std::wstring();
   return wstring;
 }
 
 static std::string un_wstring(std::wstring const& x)
 {
   char nstring[10240];
-  size_t r= wcstombs(nstring,x.c_str(),sizeof(nstring)/sizeof(char));
-  if (r==(size_t)(-1)) return std::string();
+  assert(WideCharToMultiByte(CP_UTF8, 0, x.c_str(), -1, nstring, sizeof(nstring), NULL, NULL)!=0);
+//  size_t r= wcstombs(nstring,x.c_str(),sizeof(nstring)/sizeof(char));
+//  if (r==(size_t)(-1)) return std::string();
   return nstring;
 }
 #endif
