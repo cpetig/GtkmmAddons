@@ -14,7 +14,8 @@
 # include <objidl.h> // IMalloc
 # include <shlobj.h>
 #include <gdk/gdkwin32.h>
-#include <Misc/i18n.h>
+//#include <Misc/i18n.h> // dependency not easily added, prefer glib_gettext?
+#define _(X) (X)
 
 class TagStream { public: static void utf82iso(std::string &s); };
 //extern std::string utf82iso(const std::string &s);
