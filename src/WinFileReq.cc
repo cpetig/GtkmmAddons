@@ -7,6 +7,7 @@
 
 #include "config.h"
 #include "WinFileReq.hh"
+#include <iostream>
 
 #ifdef __MINGW32__
 # include <windows.h>
@@ -82,6 +83,8 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
 	: slot(sl), call_on_cancel(pass_cancel), dont_delete()
 #endif
 {
+   if (filter.size()>2 && filter.substr(filter.size()-3,3)!=std::string(3,char(0)))
+     std::cerr << "Filter for " << title << " does not contain 3 trailing \\0\n";
 #ifndef __MINGW32__
    set_filename(file);
    set_title(title);
@@ -90,9 +93,9 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    std::string patsep(1,char(0));
    if (filter.empty() && !extension.empty() && !title.empty())
    {  filter=title+" (*."+extension+")"+patsep+"*."+extension+patsep+
-           _("All Files (*.*)")+patsep+"*.*"+patsep;
+           _("All Files (*.*)")+patsep+"*.*"+patsep+patsep+patsep;
    }
-   if (filter.empty()) filter = _("All Files (*.*)")+patsep+"*.*"+patsep;
+   if (filter.empty()) filter = _("All Files (*.*)")+patsep+"*.*"+patsep+patsep+patsep;
    // file is assumed to have UTF-8 encoding
    std::wstring wfile=make_wstring(file);
    std::wstring wtitle=make_wstring(title);
