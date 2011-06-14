@@ -59,19 +59,21 @@ namespace SigC
 static std::wstring make_wstring(std::string const& x)
 {
   wchar_t wstring[10240];
-  assert(MultiByteToWideChar(CP_UTF8, 0, x.c_str(), -1, wstring, sizeof(wstring)/sizeof(wchar_t))!=0);
+  int res= MultiByteToWideChar(CP_UTF8, 0, x.data(), x.size(), wstring, sizeof(wstring)/sizeof(wchar_t));
+  assert(res!=0);
 //  size_t r= mbstowcs(wstring,x.c_str(),sizeof(wstring)/sizeof(wchar_t));
 //  if (r==(size_t)(-1)) return std::wstring();
-  return wstring;
+  return std::wstring(wstring,wstring+res);
 }
 
 static std::string un_wstring(std::wstring const& x)
 {
   char nstring[10240];
-  assert(WideCharToMultiByte(CP_UTF8, 0, x.c_str(), -1, nstring, sizeof(nstring), NULL, NULL)!=0);
+  int res= WideCharToMultiByte(CP_UTF8, 0, x.data(), x.size(), nstring, sizeof(nstring), NULL, NULL);
+  assert(res!=0);
 //  size_t r= wcstombs(nstring,x.c_str(),sizeof(nstring)/sizeof(char));
 //  if (r==(size_t)(-1)) return std::string();
-  return nstring;
+  return std::string(nstring,nstring+res);
 }
 #endif
 
