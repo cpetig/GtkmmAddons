@@ -58,6 +58,7 @@ namespace SigC
 #ifdef WIN32
 std::wstring WinFileReq::make_wstring(std::string const& x)
 {
+  if (x.empty()) return std::wstring();
   wchar_t wstring[10240];
   int res= MultiByteToWideChar(CP_UTF8, 0, x.data(), x.size(), wstring, sizeof(wstring)/sizeof(wchar_t));
   assert(res!=0);
@@ -68,6 +69,7 @@ std::wstring WinFileReq::make_wstring(std::string const& x)
 
 std::string WinFileReq::un_wstring(std::wstring const& x)
 {
+  if (x.empty()) return std::string();
   char nstring[10240];
   int res= WideCharToMultiByte(CP_UTF8, 0, x.data(), x.size(), nstring, sizeof(nstring), NULL, NULL);
   assert(res!=0);
