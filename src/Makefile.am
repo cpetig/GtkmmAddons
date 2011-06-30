@@ -12,7 +12,8 @@ lib_LIBRARIES = libGtkmmAddons.a
 
 include_HEADERS = Gtk_OStream.h Message.h SearchCombo.h \
 		SearchComboContent.h gtksearchcombo.h \
-		TeX.h SelectMatching.h SigC2SlotEmu.h
+		TeX.h SelectMatching.h SigC2SlotEmu.h ja_nein_frage.hh \
+		ja_nein_frage_glade.hh
 
 libGtkmmAddons_a_SOURCES = Gtk_OStream_label.cc \
 		 Gtk_OStream_optionmenu.cc Gtk_OStream_stream.cc \
@@ -20,7 +21,7 @@ libGtkmmAddons_a_SOURCES = Gtk_OStream_label.cc \
 		 gtksearchcombo.c Gtk_OStream_TreeView.cc \
 		 DoubleButton.cc doublebutton.c WinFileReq.cc \
 		 ChoiceButton.cc gtkhacks.cc Gtk2TeX.cc \
-		 expander_hook.c SearchCombo3.cc
+		 expander_hook.c SearchCombo3.cc ja_nein_frage_glade.cc
 #SearchCombo2.cc
 
 BUILT_SOURCES=SearchCombo.cc SearchCombo.h gtksearchcombo.c gtksearchcombo.h \
