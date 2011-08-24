@@ -10,6 +10,7 @@
 #include <iostream>
 
 #ifdef __MINGW32__
+//#include <DllObject.h> // cant use ManuProC_Base
 # include <windows.h>
 # include <commdlg.h>
 # include <objidl.h> // IMalloc
@@ -19,7 +20,7 @@
 //#include <Misc/i18n.h> // dependency not easily added, prefer glib_gettext?
 #define _(X) (X)
 
-class TagStream { public: static void utf82iso(std::string &s); };
+//class TagStream { public: static void utf82iso(std::string &s); };
 //extern std::string utf82iso(const std::string &s);
 #endif
 
@@ -58,6 +59,9 @@ namespace SigC
 #ifdef WIN32
 std::wstring WinFileReq::make_wstring(std::string const& x)
 {
+#if 0
+  return ManuProC::make_wstring(x);
+#else
   if (x.empty()) return std::wstring();
   wchar_t wstring[10240];
   int res= MultiByteToWideChar(CP_UTF8, 0, x.data(), x.size(), wstring, sizeof(wstring)/sizeof(wchar_t));
@@ -65,10 +69,14 @@ std::wstring WinFileReq::make_wstring(std::string const& x)
 //  size_t r= mbstowcs(wstring,x.c_str(),sizeof(wstring)/sizeof(wchar_t));
 //  if (r==(size_t)(-1)) return std::wstring();
   return std::wstring(wstring,wstring+res);
+#endif
 }
 
 std::string WinFileReq::un_wstring(std::wstring const& x)
 {
+#if 0
+  return ManuProC::un_wstring(x);
+#else
   if (x.empty()) return std::string();
   char nstring[10240];
   int res= WideCharToMultiByte(CP_UTF8, 0, x.data(), x.size(), nstring, sizeof(nstring), NULL, NULL);
@@ -76,6 +84,7 @@ std::string WinFileReq::un_wstring(std::wstring const& x)
 //  size_t r= wcstombs(nstring,x.c_str(),sizeof(nstring)/sizeof(char));
 //  if (r==(size_t)(-1)) return std::string();
   return std::string(nstring,nstring+res);
+#endif
 }
 #endif
 
