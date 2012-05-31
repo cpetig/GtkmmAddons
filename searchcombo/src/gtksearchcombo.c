@@ -39,6 +39,7 @@
 #include <gtk/gtkwidget.h>
 
 //#include <gtk/gtkversion.h>
+#include <gtk/gtk.h>
 
 #if 0
 #define DEBUG(x) x
