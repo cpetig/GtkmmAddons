@@ -130,7 +130,7 @@ std::string TeX::string2TeX(const std::string &s, const StringFlags &fl) throw()
 	 case '[': // these seem to pass as is
 	 case ']':
 	    in_line=true;
-	    ret+=s[i];
+	    ret+=std::string("{")+s[i]+'}';
 	    break;
 	 case '*':
 	 case '<':
@@ -168,7 +168,10 @@ std::string TeX::string2TeX(const std::string &s, const StringFlags &fl) throw()
 	    break;
          case 0x20ac: // '€'
             ret+="\\euro";
-            break;	    
+            break;	 
+         case 0xae:	// ®
+            ret+="\\textsuperscript{\\textregistered}";      
+            break;
 	 default:
 	    if (value<0x80) // || value==(unsigned char)(s[i]))
 	       ret+= s[i];
