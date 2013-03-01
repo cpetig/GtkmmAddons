@@ -24,6 +24,7 @@
 
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkitem.h>
+#include <gtk/gtklabel.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -37,6 +37,7 @@
 #include "gtksearchcombo.h"
 //#include <gtk/gtkframe.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 //#include <gtk/gtkversion.h>
 #include <gtk/gtk.h>
@@ -155,7 +156,7 @@ gtk_searchcombo_popdown_list (GtkSearchCombo *combo)
   gtk_widget_hide (combo->popwin);
 
 
-// GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>9
+//#if GTKMM_MAJOR_VERSION==2 && GTKMM_MINOR_VERSION>8
 #if GTK_CHECK_VERSION(2,9,0)
   gtk_window_group_add_window (gtk_window_get_group (NULL), GTK_WINDOW (combo->popwin));
 #else
