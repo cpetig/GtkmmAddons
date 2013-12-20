@@ -25,9 +25,10 @@ AC_SUBST(CXXFLAGS)
 
 AC_HEADER_STDC
 
-PKG_CHECK_MODULES(GTKMM,[gtkmm-2.4 >= 2.4.0],
+PKG_CHECK_MODULES(GTKMM,[gtkmm-3.0 >= 3.0.0],
+	[PKG_CHECK_MODULES(GTKMM,[gtkmm-2.4 >= 2.4.0],
 	[PKG_CHECK_MODULES(SIGC,[sigc++-2.0 >= 2.0.1])],
-	[PKG_CHECK_MODULES(GTKMM,[gtkmm-2.0 >= 1.3.20])])
+	[PKG_CHECK_MODULES(GTKMM,[gtkmm-2.0 >= 1.3.20])])])
 
 dnl LATEX stuff
 m4_include(latex.m4)
