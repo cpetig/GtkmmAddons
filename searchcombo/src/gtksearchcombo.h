@@ -22,8 +22,13 @@
 #ifndef __GTK_SEARCH_COMBO_H__
 #define __GTK_SEARCH_COMBO_H__
 
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkitem.h>
+#if GTK_MAJOR_VERSION<3
+# include <gtk/gtkhbox.h>
+# include <gtk/gtkitem.h>
+#else
+# include <gtk/gtkbox.h>
+typedef GType GtkType;
+#endif
 
 #ifdef __cplusplus
 extern "C" {

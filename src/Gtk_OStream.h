@@ -21,7 +21,12 @@
 #ifndef GTKMM_OSTREAM_H
 #define GTKMM_OSTREAM_H
 #include <callbackbuf.h> 
-#include <gtk/gtktypeutils.h> // for gpointer, GtkDestroyNotify
+#include <gtk/gtk.h>
+#if GTK_MAJOR_VERSION<3 
+# include <gtk/gtktypeutils.h> // for gpointer, GtkDestroyNotify
+#else
+typedef GDestroyNotify GtkDestroyNotify;
+#endif
 #include <sigc++/signal.h>
 #include <string.h>
 
