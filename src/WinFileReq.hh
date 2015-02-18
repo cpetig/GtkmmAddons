@@ -42,9 +42,5 @@ public:
 		std::string filter=std::string(), std::string extension=std::string(),
 		std::string title=std::string(), bool load=true,
 		Gtk::Window *parent=0);
-#ifdef WIN32
-	static std::wstring make_wstring(std::string const& x);
-	static std::string un_wstring(std::wstring const& x);
-#endif
 };
 #endif

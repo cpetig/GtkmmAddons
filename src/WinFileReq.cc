@@ -9,6 +9,8 @@
 #include "WinFileReq.hh"
 #include <iostream>
 
+
+
 #ifdef __MINGW32__
 //#include <DllObject.h> // cant use ManuProC_Base
 # include <windows.h>
@@ -17,7 +19,7 @@
 # include <shlobj.h>
 #include <gdk/gdkwin32.h>
 #include <assert.h>
-//#include <Misc/i18n.h> // dependency not easily added, prefer glib_gettext?
+#include <Misc/win32_utf8.h> // dependency not easily added, prefer glib_gettext?
 #define _(X) (X)
 
 //class TagStream { public: static void utf82iso(std::string &s); };
@@ -56,38 +58,6 @@ namespace SigC
 #include "WinFileReq_glade.cc"
 #endif
 
-#ifdef WIN32
-std::wstring WinFileReq::make_wstring(std::string const& x)
-{
-#if 0
-  return ManuProC::make_wstring(x);
-#else
-  if (x.empty()) return std::wstring();
-  wchar_t wstring[10240];
-  int res= MultiByteToWideChar(CP_UTF8, 0, x.data(), x.size(), wstring, sizeof(wstring)/sizeof(wchar_t));
-  assert(res!=0);
-//  size_t r= mbstowcs(wstring,x.c_str(),sizeof(wstring)/sizeof(wchar_t));
-//  if (r==(size_t)(-1)) return std::wstring();
-  return std::wstring(wstring,wstring+res);
-#endif
-}
-
-std::string WinFileReq::un_wstring(std::wstring const& x)
-{
-#if 0
-  return ManuProC::un_wstring(x);
-#else
-  if (x.empty()) return std::string();
-  char nstring[10240];
-  int res= WideCharToMultiByte(CP_UTF8, 0, x.data(), x.size(), nstring, sizeof(nstring), NULL, NULL);
-  assert(res!=0);
-//  size_t r= wcstombs(nstring,x.c_str(),sizeof(nstring)/sizeof(char));
-//  if (r==(size_t)(-1)) return std::string();
-  return std::string(nstring,nstring+res);
-#endif
-}
-#endif
-
 WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
                 std::string file, std::string filter,
                 std::string extension, std::string title, bool load,
@@ -110,11 +80,11 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    }
    if (filter.empty()) filter = _("All Files (*.*)")+patsep+"*.*"+patsep+patsep+patsep;
    // file is assumed to have UTF-8 encoding
-   std::wstring wfile=make_wstring(file);
-   std::wstring wtitle=make_wstring(title);
+   std::wstring wfile=ManuProC::make_wstring(file);
+   std::wstring wtitle=ManuProC::make_wstring(title);
 
-   std::wstring wfilter=make_wstring(filter);
-   std::wstring wextension=make_wstring(extension);
+   std::wstring wfilter=ManuProC::make_wstring(filter);
+   std::wstring wextension=ManuProC::make_wstring(extension);
 
    wchar_t buf[MAX_PATH];
    wcsncpy(buf,wfile.c_str(),sizeof(buf)/sizeof(wchar_t));
@@ -134,7 +104,7 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
        if ( SHGetPathFromIDListW ( pidl, buf ) )
        { std::wstring wresult=buf;
          //TagStream::utf82iso(result);
-         const_cast<sigc::slot<void,const std::string &>&>(sl)(un_wstring(wresult));
+         const_cast<sigc::slot<void,const std::string &>&>(sl)(ManuProC::un_wstring(wresult));
        }
         // free memory used
         IMalloc * imalloc = 0;
@@ -177,7 +147,7 @@ WinFileReq::WinFileReq(const sigc::slot<void,const std::string &> &sl,
    if (res)
    { //std::string result=buf;
      //TagStream::utf82iso(result);
-     const_cast<sigc::slot<void,const std::string &>&>(sl)(un_wstring(buf));
+     const_cast<sigc::slot<void,const std::string &>&>(sl)(ManuProC::un_wstring(buf));
    }
    else if (pass_cancel)
       const_cast<sigc::slot<void,const std::string &>&>(sl)(std::string());
