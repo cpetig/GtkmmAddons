@@ -25,6 +25,7 @@
 #if GTK_MAJOR_VERSION<3
 # include <gtk/gtkhbox.h>
 # include <gtk/gtkitem.h>
+# include <gtk/gtklabel.h>
 #else
 # include <gtk/gtkbox.h>
 typedef GType GtkType;
