@@ -4,11 +4,20 @@ CLEANFILES = *~
 
 GTKMMTOOLS=$(HOME)/sourceforge/gtkmm-2.2/tools
 
-AM_CXXFLAGS=-Wall
+AM_CPPFLAGS = -Wall -I. -I$(top_srcdir)/searchcombo/src @GTKMM_CFLAGS@ @MPC_BASE_INCLUDES@
 
-INCLUDES = -I. -I$(top_srcdir)/searchcombo/src @GTKMM_CFLAGS@
+
+if WINDOWS
+WIN_LDFLAGS=@MPC_BASE_LDFLAGS@
+DLL_LDADD=@MPC_BASE_LIBS@
+else
+WIN_LDFLAGS=
+DLL_LDADD=
+endif
+
 
 lib_LIBRARIES = libGtkmmAddons.a
+libGtkmmAddons_la_LIBADD=$(DLL_LDADD)
 
 include_HEADERS = Gtk_OStream.h Message.h SearchCombo.h \
 		SearchComboContent.h gtksearchcombo.h \
@@ -33,6 +42,9 @@ EXTRA_DIST=SearchCombo.hg SearchCombo.ccg private/SearchCombo_p.h \
 
 gtkmm:
 	ln -sf . gtkmm
+
+
+AM_LDFLAGS=@LDFLAGS@ $(WIN_LDFLAGS)
 
 SearchCombo.cc SearchCombo.h: gtkmm SearchCombo.hg SearchCombo.ccg
 	if [ ! -d private ] ; then mkdir private ; fi
