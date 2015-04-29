@@ -75,6 +75,13 @@ Gtk::SearchCombo3::SearchCombo3(bool _always_fill, bool _autoexpand, mycols *col
   if (always_fill) g_signal_emit_by_name(e.gobj(), "changed");
 }
 
+
+void Gtk::SearchCombo3::set_always_fill(bool val)
+{
+ always_fill=val;
+}
+
+
 void Gtk::SearchCombo3::stop_search()
 {
 
@@ -99,6 +106,8 @@ void Gtk::SearchCombo3::on_entry_changed()
   if (block_change) return;
   do_restart=false;
   start_search();
+  if(autoexpand && completion_model->children().size()==1)
+    match_selected(completion_model->children().begin());
 }
 
 void Gtk::SearchCombo3::set_autoexpand(bool b) { autoexpand=b; }
