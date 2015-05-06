@@ -19,6 +19,7 @@
 */
 
 #include "Gtk_OStream.h"
+#if GTK_MAJOR_VERSION<3 
 #include <gtkmm/optionmenu.h>
 #include <gtkmm/menuitem.h>
 #include <gtkmm/menu.h>
@@ -46,3 +47,4 @@ void Gtk::OStream::line_OptionMenu(const std::string &line)
     item->show();
     if (user_data) item->set_data("user_data",user_data,notify);
 }
+#endif
