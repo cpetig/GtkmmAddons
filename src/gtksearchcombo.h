@@ -1,0 +1,1 @@
+../searchcombo/src/gtksearchcombo.h
