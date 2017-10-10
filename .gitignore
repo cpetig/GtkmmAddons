@@ -21,3 +21,4 @@ tests/Makefile
 tests/Makefile.in
 tests/close_window/Makefile
 tests/close_window/Makefile.in
+*~

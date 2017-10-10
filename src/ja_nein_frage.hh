@@ -12,7 +12,19 @@
 #ifndef _JA_NEIN_FRAGE_HH
 #  include "ja_nein_frage_glade.hh"
 #  define _JA_NEIN_FRAGE_HH
+
+#include <gdk/gdk.h>
+
 class ja_nein_frage : public ja_nein_frage_glade
-{  
+{
+    guint m_yes_key;
+    guint m_no_key;
+
+    bool on_key_release_event(GdkEventKey *ev);
+
+public:
+    ja_nein_frage();
+    ja_nein_frage(const guint yes_key_event, const guint no_key_event);
 };
-#endif
+
+#endif // _JA_NEIN_FRAGE_HH
