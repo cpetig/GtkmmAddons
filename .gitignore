@@ -22,3 +22,4 @@ tests/Makefile.in
 tests/close_window/Makefile
 tests/close_window/Makefile.in
 *~
+autom4te.cache/
