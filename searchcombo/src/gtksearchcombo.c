@@ -64,7 +64,7 @@ static guint searchcombo_signals[LAST_SIGNAL] = { 0 };
 static GtkListItem *	gtk_searchcombo_find (const GtkSearchCombo * searchcombo);
 const gboolean select_on_refocus=TRUE;
 
-#define SEARCHCOMBO_LIST_MAX_HEIGHT	(400)
+#define SEARCHCOMBO_LIST_MAX_HEIGHT	(250)
 #define	EMPTY_LIST_HEIGHT	(20)
 #define START_IDLE_HEIGHT	(180)
 #define SEARCHCOMBO_FIRST_SEARCH (20)
