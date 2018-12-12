@@ -5,7 +5,7 @@
 # parts taken from glade--, guppi2
 
 AC_PREREQ(2.50)
-AC_INIT(GtkmmAddons,1.3.0,[manuproc-developer-de@berlios.de])
+AC_INIT(ManuProC_GtkmmAddons,1.3.0,[manuproc-developer-de@berlios.de])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADERS(config.h)
 
