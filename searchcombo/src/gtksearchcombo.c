@@ -579,6 +579,7 @@ DEBUG(printf("SCB init: idle_handler_id=%d\n",searchcombo->idle_handler_id));
     		GTK_SIGNAL_FUNC (gtk_searchcombo_capture_focus),NULL);
 }
 
+#if 0
 GtkType
 gtk_searchcombo_get_type (void)
 {
@@ -601,6 +602,9 @@ gtk_searchcombo_get_type (void)
     }
   return searchcombo_type;
 }
+#else
+G_DEFINE_TYPE(GtkSearchCombo, gtk_searchcombo, gtk_hbox_get_type ());
+#endif
 
 GtkType
 gtk_search_combo_get_type (void) // needed for gtkmm (default naming scheme)
