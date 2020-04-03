@@ -20,7 +20,7 @@
  */
 
 #include <gtkmm/button.h>
-#include <doublebutton.h>
+#include <gtkdoublebutton.h>
 _DEFS(gtkmm,localgtk)
 _PINCLUDE(gtkmm/private/button_p.h)
 

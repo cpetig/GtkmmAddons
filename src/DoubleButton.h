@@ -28,7 +28,7 @@
  */
 
 #include <gtkmm/button.h>
-#include <doublebutton.h>
+#include <gtkdoublebutton.h>
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
