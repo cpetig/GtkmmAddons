@@ -4,10 +4,11 @@
 #
 # parts taken from glade--, guppi2
 
-AC_INIT(src/gtksearchcombo.h)
+AC_INIT(gtksearchcombo, 0.3.1,[christof.petig@arcor.de])
+#src/gtksearchcombo.h)
 
-AM_INIT_AUTOMAKE(gtksearchcombo, 0.3.1)
-AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE
+AC_CONFIG_HEADERS(config.h)
 
 AC_PREFIX_DEFAULT(/usr/local)
 
