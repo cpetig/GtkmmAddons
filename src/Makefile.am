@@ -28,13 +28,13 @@ libManuProC_GtkmmAddons_a_SOURCES = Gtk_OStream_label.cc \
 		 Gtk_OStream_optionmenu.cc Gtk_OStream_stream.cc \
 		 SearchCombo.cc TeX.cc Gtk_OStream.cc \
 		 gtksearchcombo.c Gtk_OStream_TreeView.cc \
-		 DoubleButton.cc doublebutton.c WinFileReq.cc \
+		 DoubleButton.cc gtkdoublebutton.c WinFileReq.cc \
 		 ChoiceButton.cc gtkhacks.cc Gtk2TeX.cc \
 		 expander_hook.c SearchCombo3.cc ja_nein_frage_glade.cc ja_nein_frage.cc
 #SearchCombo2.cc
 
 BUILT_SOURCES=SearchCombo.cc SearchCombo.h gtksearchcombo.c gtksearchcombo.h \
-	gtkmm DoubleButton.h DoubleButton.cc doublebutton.c doublebutton.h \
+	gtkmm DoubleButton.h DoubleButton.cc gtkdoublebutton.c gtkdoublebutton.h \
 	WinFileReq_glade.hh WinFileReq.hh ComboBoxMapping.hh
 
 EXTRA_DIST=SearchCombo.hg SearchCombo.ccg private/SearchCombo_p.h \
@@ -56,7 +56,7 @@ DoubleButton.cc DoubleButton.h: gtkmm DoubleButton.hg DoubleButton.ccg
 #	echo perl -I$(GTKMMTOOLS)/pm $(GTKMMTOOLS)/gtkmmproc -I $(GTKMMTOOLS)/m4 --defs . DoubleButton . .
 	echo /usr/lib/glibmm-2.4/proc/gmmproc --defs . DoubleButton . .
 
-gtksearchcombo.h gtksearchcombo.c doublebutton.c doublebutton.h \
+gtksearchcombo.h gtksearchcombo.c gtkdoublebutton.c gtkdoublebutton.h \
 		: $(top_srcdir)/searchcombo/src/$@
 	ln -sf $(top_srcdir)/searchcombo/src/$@ .
 
