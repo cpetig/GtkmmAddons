@@ -8,4 +8,4 @@ lib_LIBRARIES = libGtkmmAddonsWidgets.a
 
 include_HEADERS = gtksearchcombo.h doublebutton.h
 
-libGtkmmAddonsWidgets_a_SOURCES = gtksearchcombo.c doublebutton.c
+libGtkmmAddonsWidgets_a_SOURCES = gtksearchcombo.c gtkdoublebutton.c
